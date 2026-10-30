@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .not-found__title {
@@ -12,11 +12,12 @@
 }
 
 .not-found__description {
-  color: var(--color-text-sub);
+  color: var(--color-text-caption);
 }
 
 .not-found__link {
   padding: 8px 16px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  background: var(--color-white);
 }

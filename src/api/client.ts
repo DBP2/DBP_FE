@@ -10,7 +10,6 @@ export class ApiError extends Error {
   }
 }
 
-/** 공통 fetch 래퍼. 도메인별 API 함수는 api/[domain].ts 에 작성합니다. */
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     ...init,

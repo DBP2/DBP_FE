@@ -1,17 +1,10 @@
-.home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 100vh;
+.home-page {
+  padding: 44px var(--page-padding-x) 24px;
 }
 
-.home__title {
-  font-size: 32px;
-  color: var(--color-primary);
-}
-
-.home__description {
-  color: var(--color-text-sub);
+.home-page__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  color: var(--color-text);
 }
