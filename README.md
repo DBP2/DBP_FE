@@ -70,7 +70,7 @@ src/
 ├── api/             # API 호출 (client.ts 공통 fetch 래퍼, 도메인별 파일)
 ├── assets/          # 이미지, 폰트 등 정적 파일
 ├── components/
-│   ├── common/      # 앱 전체 공용 컴포넌트 (조이 담당, 개별 생성 금지)
+│   ├── common/      # 앱 전체 공용 컴포넌트 
 │   └── [page]/      # 페이지 전용 컴포넌트
 ├── constants/       # 여러 도메인에서 공유하는 상수
 ├── hooks/           # 커스텀 훅
@@ -85,7 +85,6 @@ src/
 ```
 
 - import 시 `@/` 절대경로를 사용합니다. 예) `import { cn } from '@/utils/cn';`
-- 테스트 파일은 대상 파일 옆에 `*.test.ts(x)` 로 둡니다.
 
 <br />
 
