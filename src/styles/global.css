@@ -1,6 +1,7 @@
 :root {
   --color-primary: #3563e0;
   --color-primary-light: #eaf1ff;
+  --color-primary-soft: #f5f9ff;
   --color-text: #191f28;
   --color-text-sub: #4e5968;
   --color-text-caption: #6b7684;
@@ -41,6 +42,7 @@ body {
   font-family: var(--font-family);
   color: var(--color-text);
   background: var(--color-bg-outside);
+  letter-spacing: -0.3px;
   -webkit-font-smoothing: antialiased;
 }
 
