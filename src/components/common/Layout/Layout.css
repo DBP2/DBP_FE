@@ -1,0 +1,16 @@
+.layout {
+  position: relative;
+  width: 100%;
+  max-width: var(--app-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: var(--color-bg);
+}
+
+.layout__content {
+  min-height: 100dvh;
+}
+
+.layout__content--with-nav {
+  padding-bottom: calc(var(--nav-bar-height) + env(safe-area-inset-bottom));
+}

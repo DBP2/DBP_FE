@@ -1,0 +1,10 @@
+.my-page {
+  padding: 44px var(--page-padding-x) 24px;
+}
+
+.my-page__title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  color: var(--color-text);
+}
