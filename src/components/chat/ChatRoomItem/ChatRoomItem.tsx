@@ -12,7 +12,8 @@ import { formatRelativeTime } from '@/utils/formatRelativeTime';
 import './ChatRoomItem.css';
 
 const STATUS_TAG: Record<TradeStatus, { label: string; color: TagColor } | null> = {
-  ongoing: null,
+  requested: null,
+  accepted: null,
   done: { label: '거래완료', color: 'gray' },
 };
 

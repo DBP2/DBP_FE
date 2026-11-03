@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ChatRoomItem from '@/components/chat/ChatRoomItem/ChatRoomItem';
 import SafetyNotice from '@/components/chat/SafetyNotice/SafetyNotice';
 import ChipGroup, { type ChipOption } from '@/components/common/ChipGroup/ChipGroup';
+import ErrorState from '@/components/common/ErrorState/ErrorState';
 import { useChatRooms } from '@/hooks/useChatRooms';
 import type { ChatRoom } from '@/types/chat';
 
@@ -18,7 +19,7 @@ const FILTERS: Record<ChatFilter, (room: ChatRoom) => boolean> = {
 };
 
 export default function ChatPage() {
-  const { data: chatRooms = [], isPending } = useChatRooms();
+  const { data: chatRooms = [], isPending, isError, refetch } = useChatRooms();
   const [filter, setFilter] = useState<ChatFilter>('all');
 
   const unreadCount = chatRooms.reduce((sum, room) => sum + room.unreadCount, 0);
@@ -39,7 +40,9 @@ export default function ChatPage() {
         value={filter}
         onChange={setFilter}
       />
-      {!isPending && filteredRooms.length === 0 ? (
+      {isError ? (
+        <ErrorState message="채팅 목록을 불러오지 못했어요" onRetry={() => void refetch()} />
+      ) : !isPending && filteredRooms.length === 0 ? (
         <p className="chat-page__empty">채팅이 없어요</p>
       ) : (
         <ul>

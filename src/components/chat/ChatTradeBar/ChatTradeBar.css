@@ -1,0 +1,39 @@
+.chat-trade-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px var(--page-padding-x) 14px;
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-white);
+}
+
+.chat-trade-bar__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.chat-trade-bar__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-trade-bar__title {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chat-trade-bar__price {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 20px;
+}
