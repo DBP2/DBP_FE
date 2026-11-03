@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 
 import './Tag.css';
 
-export type TagColor = 'blue' | 'gray';
+export type TagColor = 'blue' | 'green' | 'gray';
 
 interface TagProps {
   color?: TagColor;

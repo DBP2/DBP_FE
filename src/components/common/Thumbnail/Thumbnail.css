@@ -3,3 +3,9 @@
   object-fit: cover;
   background: var(--color-gray-100);
 }
+
+.thumbnail--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

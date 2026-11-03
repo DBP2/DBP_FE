@@ -1,0 +1,14 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px var(--page-padding-x);
+}
+
+.error-state__message {
+  color: var(--color-text-caption);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}

@@ -1,0 +1,32 @@
+.bottom-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.bottom-sheet__dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.5);
+}
+
+.bottom-sheet__panel {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  max-width: var(--app-max-width);
+  padding: 8px var(--page-padding-x) calc(20px + env(safe-area-inset-bottom));
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: var(--color-white);
+  transform: translateX(-50%);
+}
+
+.bottom-sheet__handle {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 2px;
+  background: var(--color-border);
+}

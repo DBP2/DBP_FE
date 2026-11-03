@@ -9,19 +9,24 @@
 
 .tag--sm {
   height: 18px;
-  padding: 0 5px;
+  padding: 0 5px 2px;
   font-size: 10px;
 }
 
 .tag--md {
   height: 22px;
-  padding: 0 8px;
+  padding: 0 8px 2px;
   font-size: 11px;
 }
 
 .tag--blue {
   background: var(--color-primary-light);
   color: var(--color-primary);
+}
+
+.tag--green {
+  background: var(--color-green-light);
+  color: var(--color-green);
 }
 
 .tag--gray {

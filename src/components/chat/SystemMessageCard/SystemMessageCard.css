@@ -1,0 +1,46 @@
+.system-message-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-primary-border);
+  border-radius: 16px;
+  background: var(--color-white);
+}
+
+.system-message-card__icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--color-primary-light);
+}
+
+.system-message-card__text {
+  color: var(--color-text-sub);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.system-message-card__point {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.system-message-card__place {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.system-message-card__place-label {
+  flex-shrink: 0;
+  color: var(--color-text-caption);
+  font-weight: 400;
+}
