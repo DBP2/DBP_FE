@@ -1,0 +1,20 @@
+.safety-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--color-primary-soft);
+}
+
+.safety-notice__icon {
+  flex-shrink: 0;
+}
+
+.safety-notice__text {
+  color: var(--color-text-caption);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  word-break: keep-all;
+}

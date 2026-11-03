@@ -1,0 +1,30 @@
+.tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tag--sm {
+  height: 18px;
+  padding: 0 5px;
+  font-size: 10px;
+}
+
+.tag--md {
+  height: 22px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.tag--blue {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.tag--gray {
+  background: var(--color-gray-100);
+  color: var(--color-text-caption);
+}

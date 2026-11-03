@@ -70,11 +70,12 @@ src/
 ├── api/             # API 호출 (client.ts 공통 fetch 래퍼, 도메인별 파일)
 ├── assets/          # 이미지, 폰트 등 정적 파일
 ├── components/
-│   ├── common/      # 앱 전체 공용 컴포넌트 
+│   ├── common/      # 앱 전체 공용 컴포넌트
 │   └── [page]/      # 페이지 전용 컴포넌트
 ├── constants/       # 여러 도메인에서 공유하는 상수
 ├── hooks/           # 커스텀 훅
 ├── lib/             # 외부 라이브러리 설정 (TanStack Query 등)
+├── mocks/           # 백엔드 연결 전 사용하는 예시 데이터
 ├── pages/           # 라우트 단위 페이지
 ├── router/          # 라우트 설정
 ├── store/           # 전역 상태 (zustand)

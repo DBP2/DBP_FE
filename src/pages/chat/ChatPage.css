@@ -1,10 +1,31 @@
+.layout:has(.chat-page) {
+  background: var(--color-white);
+}
+
 .chat-page {
-  padding: 44px var(--page-padding-x) 24px;
+  padding-top: 48px;
 }
 
 .chat-page__title {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.7px;
+  padding: 0 var(--page-padding-x);
   color: var(--color-text);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 35px;
+}
+
+.chat-page__filters {
+  margin-top: 12px;
+  padding: 0 var(--page-padding-x) 8px;
+}
+
+.chat-page__empty {
+  padding: 40px var(--page-padding-x);
+  color: var(--color-text-caption);
+  font-size: 14px;
+  text-align: center;
+}
+
+.chat-page__notice {
+  margin: 16px var(--page-padding-x) 0;
 }
