@@ -1,0 +1,63 @@
+.trade-record-place {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--color-green-light);
+}
+
+.trade-record-place__icon {
+  display: flex;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--color-white);
+}
+
+.trade-record-place__icon::after {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  background: var(--color-green);
+  -webkit-mask: url('@/assets/images/safeZone_green.svg') center / contain no-repeat;
+  mask: url('@/assets/images/safeZone_green.svg') center / contain no-repeat;
+  content: '';
+}
+
+.trade-record-place__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.trade-record-place__name {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.trade-record-place__status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-green);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.trade-record-place__check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--color-green);
+  -webkit-mask: url('@/assets/images/check_blue.svg') center / contain no-repeat;
+  mask: url('@/assets/images/check_blue.svg') center / contain no-repeat;
+}

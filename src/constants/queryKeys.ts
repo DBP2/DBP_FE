@@ -5,4 +5,5 @@ export const QUERY_KEYS = {
   safeZones: ['safeZones'] as const,
   posts: ['posts'] as const,
   tradeRecordInfo: (tradeId: string) => ['tradeRecordInfo', tradeId] as const,
+  myTradeRecord: (tradeId: string) => ['myTradeRecord', tradeId] as const,
 };

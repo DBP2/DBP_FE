@@ -6,9 +6,15 @@ import Button from '@/components/common/Button/Button';
 import ErrorState from '@/components/common/ErrorState/ErrorState';
 import InfoList from '@/components/common/InfoList/InfoList';
 import OptionCard from '@/components/common/OptionCard/OptionCard';
-import Tag, { type TagColor } from '@/components/common/Tag/Tag';
+import Tag from '@/components/common/Tag/Tag';
+import RecordPhoto from '@/components/trade-record/RecordPhoto/RecordPhoto';
+import TradeRecordPlace from '@/components/trade-record/TradeRecordPlace/TradeRecordPlace';
+import {
+  TRADE_ACTION_LABEL,
+  TRADE_ACTION_PHOTO_LABEL,
+  TRADE_STATUS_TAG,
+} from '@/constants/tradeRecord';
 import { useSaveTradeRecord, useTradeRecordInfo } from '@/hooks/useTradeRecord';
-import type { TradeStatus } from '@/types/chat';
 import type { SafeZoneVerification } from '@/types/safeZone';
 import type { TradeAction } from '@/types/tradeRecord';
 import { formatMonthDayTime, formatTime24 } from '@/utils/formatDateTime';
@@ -18,15 +24,9 @@ import './TradeRecordSheet.css';
 
 const MAX_PHOTOS = 3;
 
-const STATUS_TAG: Record<TradeStatus, { label: string; color: TagColor }> = {
-  requested: { label: '요청됨', color: 'blue' },
-  accepted: { label: '수락됨', color: 'green' },
-  done: { label: '거래완료', color: 'gray' },
-};
-
-const ACTION_OPTIONS: { value: TradeAction; title: string; description: string }[] = [
-  { value: 'DROP_OFF', title: '두고가기', description: '판매자가 물품을 넣어요' },
-  { value: 'PICK_UP', title: '가져가기', description: '구매자가 물품을 꺼내요' },
+const ACTION_OPTIONS: { value: TradeAction; description: string }[] = [
+  { value: 'DROP_OFF', description: '판매자가 물품을 넣어요' },
+  { value: 'PICK_UP', description: '구매자가 물품을 꺼내요' },
 ];
 
 interface RecordPhoto {
@@ -65,7 +65,7 @@ export default function TradeRecordSheet({
       : 'PICK_UP'
     : null;
   const action = selectedAction ?? defaultAction;
-  const photoLabel = action === 'DROP_OFF' ? '보관 사진' : '수령 사진';
+  const photoLabel = TRADE_ACTION_PHOTO_LABEL[action ?? 'PICK_UP'];
   const { safeZone, lockerNumber, verifiedAt } = verification;
 
   useEffect(() => {
@@ -130,18 +130,11 @@ export default function TradeRecordSheet({
         </div>
 
         <div className="trade-record-sheet__body">
-          <div className="trade-record-sheet__place">
-            <span className="trade-record-sheet__place-icon" />
-            <div className="trade-record-sheet__place-text">
-              <p className="trade-record-sheet__place-name">
-                {lockerNumber ? `${safeZone.name} · ${lockerNumber}` : safeZone.name}
-              </p>
-              <p className="trade-record-sheet__place-status">
-                <span className="trade-record-sheet__check" />
-                QR 확인 완료 · {formatMonthDayTime(verifiedAt)}
-              </p>
-            </div>
-          </div>
+          <TradeRecordPlace
+            safeZone={safeZone}
+            lockerNumber={lockerNumber}
+            status={`QR 확인 완료 · ${formatMonthDayTime(verifiedAt)}`}
+          />
 
           {isError ? (
             <ErrorState message="거래 정보를 불러오지 못했어요" onRetry={() => void refetch()} />
@@ -154,8 +147,8 @@ export default function TradeRecordSheet({
                   {
                     label: '거래 상태',
                     value: (
-                      <Tag color={STATUS_TAG[info.tradeStatus].color}>
-                        {STATUS_TAG[info.tradeStatus].label}
+                      <Tag color={TRADE_STATUS_TAG[info.tradeStatus].color}>
+                        {TRADE_STATUS_TAG[info.tradeStatus].label}
                       </Tag>
                     ),
                   },
@@ -175,7 +168,7 @@ export default function TradeRecordSheet({
                   type="radio"
                   name="trade-action"
                   layout="stacked"
-                  title={option.title}
+                  title={TRADE_ACTION_LABEL[option.value]}
                   description={option.description}
                   checked={action === option.value}
                   onChange={() => setSelectedAction(option.value)}
@@ -193,21 +186,13 @@ export default function TradeRecordSheet({
             </div>
             <div className="trade-record-sheet__photos">
               {photos.map((photo) => (
-                <div key={photo.id} className="trade-record-sheet__photo">
-                  <img
-                    src={photo.previewUrl}
-                    alt={`${photoLabel} ${formatTime24(photo.takenAt)}`}
-                  />
-                  <span className="trade-record-sheet__photo-time">
-                    {formatTime24(photo.takenAt)} 촬영
-                  </span>
-                  <button
-                    type="button"
-                    className="trade-record-sheet__photo-remove"
-                    onClick={() => removePhoto(photo.id)}
-                    aria-label="사진 삭제"
-                  />
-                </div>
+                <RecordPhoto
+                  key={photo.id}
+                  src={photo.previewUrl}
+                  alt={`${photoLabel} ${formatTime24(photo.takenAt)}`}
+                  caption={`${formatTime24(photo.takenAt)} 촬영`}
+                  onRemove={() => removePhoto(photo.id)}
+                />
               ))}
               {photos.length < MAX_PHOTOS && (
                 <button

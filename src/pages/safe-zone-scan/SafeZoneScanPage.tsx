@@ -6,8 +6,10 @@ import flashIcon from '@/assets/images/flash.svg';
 import mascotImage from '@/assets/images/qr_icon.svg';
 import qrScanIcon from '@/assets/images/qr_scan.svg';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
+import SavedTradeRecordSheet from '@/components/trade-record/SavedTradeRecordSheet/SavedTradeRecordSheet';
 import TradeRecordSheet from '@/components/trade-record/TradeRecordSheet/TradeRecordSheet';
 import { useQrScanner } from '@/hooks/useQrScanner';
+import { useMyTradeRecord } from '@/hooks/useTradeRecord';
 import { useVerifySafeZone } from '@/hooks/useVerifySafeZone';
 import { getSafeZoneCodePath } from '@/router/routes';
 import { useSafeZoneVerificationStore } from '@/store/safeZoneVerificationStore';
@@ -22,6 +24,7 @@ export default function SafeZoneScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [scanError, setScanError] = useState<string | null>(null);
   const { mutateAsync: verify, isPending: isVerifying } = useVerifySafeZone(tradeId);
+  const { data: savedRecord, isPending: isRecordLoading } = useMyTradeRecord(tradeId);
   const verifiedTradeId = useSafeZoneVerificationStore((state) => state.tradeId);
   const storedVerification = useSafeZoneVerificationStore((state) => state.verification);
   const setVerification = useSafeZoneVerificationStore((state) => state.setVerification);
@@ -52,9 +55,17 @@ export default function SafeZoneScanPage() {
   const { status, hasFlash, isFlashOn, toggleFlash, retry } = useQrScanner(
     videoRef,
     handleDecode,
-    !isVerified,
+    !isVerified && !isRecordLoading && !savedRecord,
   );
   const isCameraOn = status === 'scanning' && !isVerified;
+
+  if (savedRecord) {
+    return (
+      <section className="qr-scan-page">
+        <SavedTradeRecordSheet open record={savedRecord} onClose={() => navigate(-1)} />
+      </section>
+    );
+  }
 
   const renderMessage = () => {
     if (isVerified) {
