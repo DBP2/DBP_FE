@@ -1,0 +1,77 @@
+.layout:has(.safe-zone-code-page) {
+  background: var(--color-white);
+}
+
+.safe-zone-code-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-zone-code-page__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 24px 24px;
+}
+
+.safe-zone-code-page__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #5b7cf0 0%, #3563e0 100%);
+  box-shadow: 0 8px 16px rgba(53, 99, 224, 0.28);
+}
+
+.safe-zone-code-page__title {
+  margin-top: 24px;
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 31px;
+  letter-spacing: -0.7px;
+}
+
+.safe-zone-code-page__description {
+  margin-top: 8px;
+  color: var(--color-text-caption);
+  font-size: 13px;
+  line-height: 19.5px;
+}
+
+.safe-zone-code-page__code {
+  margin-top: 28px;
+}
+
+.safe-zone-code-page__error {
+  margin-top: 10px;
+  color: var(--color-danger);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.safe-zone-code-page__help {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--color-primary-soft);
+}
+
+.safe-zone-code-page__help-title {
+  color: var(--color-text-sub);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+}
+
+.safe-zone-code-page__help-text {
+  margin-top: 4px;
+  color: var(--color-text-caption);
+  font-size: 12px;
+  line-height: 18px;
+  word-break: keep-all;
+}

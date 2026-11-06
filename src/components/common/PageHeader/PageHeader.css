@@ -53,3 +53,16 @@
   justify-content: flex-end;
   padding-right: 10px;
 }
+
+.page-header--overlay {
+  position: relative;
+  background: none;
+}
+
+.page-header--overlay .page-header__title {
+  color: var(--color-white);
+}
+
+.page-header--overlay .page-header__subtitle {
+  color: rgba(255, 255, 255, 0.72);
+}

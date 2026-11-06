@@ -89,21 +89,3 @@
   line-height: 16.5px;
   word-break: keep-all;
 }
-
-.post-safe-zone-page__footer {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px var(--page-padding-x) calc(16px + env(safe-area-inset-bottom));
-  background: var(--color-white);
-  box-shadow: 0 -4px 8px rgba(26, 38, 89, 0.06);
-}
-
-.post-safe-zone-page__error {
-  color: var(--color-danger);
-  font-size: 12px;
-  line-height: 18px;
-  text-align: center;
-}
