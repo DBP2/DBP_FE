@@ -13,6 +13,7 @@ export const getChatRoomPath = (roomId: string) => `/chat/${roomId}`;
 
 export const getTradeDetailPath = (tradeId: string) => `/trade/${tradeId}`;
 
-export const getReportPath = (userId: string) => `/report/${userId}`;
+export const getReportPath = (userId: string, tradeId?: string) =>
+  tradeId ? `/report/${userId}?tradeId=${encodeURIComponent(tradeId)}` : `/report/${userId}`;
 
 export const getSafeZoneScanPath = (tradeId: string) => `/trade/${tradeId}/scan`;
