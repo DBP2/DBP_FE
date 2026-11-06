@@ -12,5 +12,6 @@ export interface VerifySafeZoneRequest {
 
 export interface SafeZoneVerification {
   safeZone: SafeZone;
+  lockerNumber: string | null;
   verifiedAt: string;
 }

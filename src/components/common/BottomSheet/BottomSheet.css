@@ -15,18 +15,22 @@
   bottom: 0;
   left: 50%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   max-width: var(--app-max-width);
-  padding: 8px var(--page-padding-x) calc(20px + env(safe-area-inset-bottom));
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  max-height: calc(100dvh - 48px);
+  padding: 12px var(--page-padding-x) calc(20px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
   background: var(--color-white);
   transform: translateX(-50%);
 }
 
 .bottom-sheet__handle {
   display: block;
-  width: 36px;
-  height: 4px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 5px;
   margin: 0 auto 12px;
-  border-radius: 2px;
-  background: var(--color-border);
+  border-radius: 2.5px;
+  background: #d5dae1;
 }

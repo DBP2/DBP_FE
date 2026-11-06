@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 
 import exitIcon from '@/assets/images/exit.svg';
@@ -6,6 +6,7 @@ import flashIcon from '@/assets/images/flash.svg';
 import mascotImage from '@/assets/images/qr_icon.svg';
 import qrScanIcon from '@/assets/images/qr_scan.svg';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
+import TradeRecordSheet from '@/components/trade-record/TradeRecordSheet/TradeRecordSheet';
 import { useQrScanner } from '@/hooks/useQrScanner';
 import { useVerifySafeZone } from '@/hooks/useVerifySafeZone';
 import { getSafeZoneCodePath } from '@/router/routes';
@@ -27,6 +28,14 @@ export default function SafeZoneScanPage() {
   const clearVerification = useSafeZoneVerificationStore((state) => state.clearVerification);
   const verification = verifiedTradeId === tradeId ? storedVerification : null;
   const isVerified = verification !== null;
+  const [sheetReadyAt, setSheetReadyAt] = useState<string | null>(null);
+  const isSheetOpen = isVerified && sheetReadyAt === verification.verifiedAt;
+
+  useEffect(() => {
+    if (!verification) return;
+    const timer = window.setTimeout(() => setSheetReadyAt(verification.verifiedAt), 700);
+    return () => window.clearTimeout(timer);
+  }, [verification]);
 
   const handleDecode = async (value: string) => {
     setScanError(null);
@@ -158,6 +167,19 @@ export default function SafeZoneScanPage() {
 
         <div className="qr-scan-page__message">{renderMessage()}</div>
       </div>
+
+      {isVerified && (
+        <TradeRecordSheet
+          open={isSheetOpen}
+          tradeId={tradeId}
+          verification={verification}
+          onClose={clearVerification}
+          onSaved={() => {
+            clearVerification();
+            navigate(-1);
+          }}
+        />
+      )}
 
       {!isVerified && (
         <div className="qr-scan-page__bottom">

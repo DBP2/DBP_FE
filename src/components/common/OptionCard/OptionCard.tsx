@@ -12,6 +12,7 @@ interface OptionCardProps {
   right?: ReactNode;
   checked: boolean;
   onChange: () => void;
+  layout?: 'inline' | 'stacked';
   className?: string;
 }
 
@@ -23,10 +24,18 @@ export default function OptionCard({
   right,
   checked,
   onChange,
+  layout = 'inline',
   className,
 }: OptionCardProps) {
   return (
-    <label className={cn('option-card', checked && 'option-card--checked', className)}>
+    <label
+      className={cn(
+        'option-card',
+        `option-card--${layout}`,
+        checked && 'option-card--checked',
+        className,
+      )}
+    >
       <input
         className="option-card__input"
         type={type}

@@ -84,6 +84,21 @@
   line-height: 22px;
 }
 
+.option-card--stacked {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  row-gap: 8px;
+  column-gap: 8px;
+}
+
+.option-card--stacked .option-card__text {
+  display: contents;
+}
+
+.option-card--stacked .option-card__description {
+  grid-column: 1 / -1;
+}
+
 .option-card__description {
   color: var(--color-text-caption);
   font-size: 12px;
