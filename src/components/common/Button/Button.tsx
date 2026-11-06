@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import './Button.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'soft';
+  variant?: 'primary' | 'soft' | 'danger';
   size?: 'sm' | 'lg';
   fullWidth?: boolean;
 }
