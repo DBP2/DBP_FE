@@ -1,0 +1,92 @@
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-white);
+  cursor: pointer;
+}
+
+.option-card--checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.option-card__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.option-card__input:focus-visible + .option-card__control {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.option-card__control {
+  position: relative;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-gray-300);
+}
+
+.option-card__control--radio {
+  border-radius: 50%;
+}
+
+.option-card__control--checkbox {
+  border-radius: 7px;
+}
+
+.option-card--checked .option-card__control {
+  border-color: var(--color-primary);
+}
+
+.option-card--checked .option-card__control--radio::after {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  content: '';
+}
+
+.option-card--checked .option-card__control--checkbox {
+  background: var(--color-primary);
+}
+
+.option-card--checked .option-card__control--checkbox::after {
+  position: absolute;
+  inset: 1px;
+  background: var(--color-white);
+  -webkit-mask: url('@/assets/images/check_blue.svg') center / 16px no-repeat;
+  mask: url('@/assets/images/check_blue.svg') center / 16px no-repeat;
+  content: '';
+}
+
+.option-card__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.option-card__title {
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.option-card__description {
+  color: var(--color-text-caption);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}

@@ -23,8 +23,8 @@
 
 .button--lg {
   height: 52px;
-  padding: 0 20px;
-  border-radius: 16px;
+  padding: 0 20px 1.5px;
+  border-radius: 14px;
   font-size: 16px;
 }
 

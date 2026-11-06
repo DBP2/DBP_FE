@@ -12,6 +12,10 @@
   box-shadow: 0 4px 8px rgba(61, 92, 191, 0.06);
 }
 
+.chat-room-page__header .page-header__title {
+  font-size: 16px;
+}
+
 .chat-room-page__name {
   position: relative;
   top: -1px;
