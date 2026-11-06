@@ -81,7 +81,7 @@ export default function SignupPage() {
             label="학교 이메일"
             required
             suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
-            placeholder="20240826"
+            placeholder="이메일 아이디"
             value={form.emailId}
             onChange={(event) => update('emailId', event.target.value.trim())}
             onBlur={touch('emailId')}

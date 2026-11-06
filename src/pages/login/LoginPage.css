@@ -15,6 +15,11 @@
   padding: 12px var(--page-padding-x) calc(24px + env(safe-area-inset-bottom));
 }
 
+.login-page__icon {
+  margin-bottom: 16px;
+  border-radius: 16px;
+}
+
 .login-page__title {
   color: var(--color-text);
   font-size: 26px;

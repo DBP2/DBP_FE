@@ -21,6 +21,10 @@
   font-weight: 800;
 }
 
+.welcome-page__brand img {
+  border-radius: 8px;
+}
+
 .welcome-page__login-link {
   color: var(--color-primary);
   font-size: 14px;
@@ -52,7 +56,7 @@
   z-index: 1;
   margin-top: 12px;
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 33px;
 }
 
@@ -68,8 +72,8 @@
 
 .welcome-page__mascot {
   position: absolute;
-  top: 14px;
   right: -6px;
+  bottom: 2px;
   opacity: 0.95;
 }
 
@@ -178,6 +182,10 @@
 .welcome-page__footer {
   margin-top: auto;
   padding-top: 28px;
+}
+
+.welcome-page__start {
+  font-weight: 600;
 }
 
 .welcome-page__login-guide {

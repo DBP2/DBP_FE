@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 
 import { ApiError } from '@/api/client';
+import appIcon from '@/assets/images/app_icon.png';
 import AuthNotice from '@/components/auth/AuthNotice/AuthNotice';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
@@ -49,6 +50,7 @@ export default function LoginPage() {
     <section className="login-page">
       <PageHeader onBack={() => navigate(ROUTES.WELCOME)} />
       <form className="login-page__form" onSubmit={handleSubmit} noValidate>
+        <img className="login-page__icon" src={appIcon} alt="" width={56} height={56} />
         <h1 className="login-page__title">다시 만나서 반가워요!</h1>
         <p className="login-page__description">
           학교 이메일로 로그인하고
@@ -60,7 +62,7 @@ export default function LoginPage() {
           <TextField
             label="학교 이메일"
             suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
-            placeholder="20240826"
+            placeholder="이메일 아이디"
             value={emailId}
             onChange={(event) => {
               setEmailId(event.target.value);

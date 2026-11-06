@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router';
 
+import appIcon from '@/assets/images/app_icon.png';
 import mailIcon from '@/assets/images/mail.svg';
 import mascotImage from '@/assets/images/mascot.png';
 import messageIcon from '@/assets/images/message.svg';
@@ -23,7 +24,7 @@ const TRUST_FEATURES = [
   },
   {
     icon: messageIcon,
-    title: '구매·대여·채팅을 한 번에',
+    title: '구매·채팅을 한 번에',
     description: '신청부터 조건 조율까지 3단계면 끝나요',
   },
 ];
@@ -39,7 +40,7 @@ export default function WelcomePage() {
     <section className="welcome-page">
       <header className="welcome-page__top">
         <span className="welcome-page__brand">
-          <img src={mascotImage} alt="" width={28} height={28} />
+          <img src={appIcon} alt="" width={28} height={28} />
           캠퍼스마켓
         </span>
         <Link className="welcome-page__login-link" to={ROUTES.LOGIN} state={state}>
@@ -57,7 +58,7 @@ export default function WelcomePage() {
         <p className="welcome-page__description">
           학교 이메일로 인증된 학우끼리
           <br />
-          교재·생활용품을 사고, 팔고, 빌려보세요.
+          교재·생활용품을 사고팔아 보세요.
         </p>
         <img className="welcome-page__mascot" src={mascotImage} alt="" width={112} height={112} />
       </div>
@@ -88,7 +89,7 @@ export default function WelcomePage() {
       </ol>
 
       <div className="welcome-page__footer">
-        <Button fullWidth onClick={() => navigate(ROUTES.SIGNUP)}>
+        <Button className="welcome-page__start" fullWidth onClick={() => navigate(ROUTES.SIGNUP)}>
           학교 이메일로 시작하기
         </Button>
         <p className="welcome-page__login-guide">
