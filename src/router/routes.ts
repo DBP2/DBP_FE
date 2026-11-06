@@ -1,5 +1,10 @@
 export const ROUTES = {
   HOME: '/',
+  WELCOME: '/welcome',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  SIGNUP_VERIFY: '/signup/verify',
+  SIGNUP_COMPLETE: '/signup/complete',
   TRADE: '/trade',
   TRADE_DETAIL: '/trade/:tradeId',
   SAFE_ZONE_SCAN: '/trade/:tradeId/scan',
