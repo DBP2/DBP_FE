@@ -1,0 +1,109 @@
+.layout:has(.signup-verify-page) {
+  background: var(--color-white);
+}
+
+.signup-verify-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.signup-verify-page__form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 8px var(--page-padding-x) calc(24px + env(safe-area-inset-bottom));
+}
+
+.signup-verify-page__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-top: 24px;
+  border-radius: 16px;
+  background: var(--color-primary-light);
+}
+
+.signup-verify-page__title {
+  margin-top: 16px;
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 31px;
+}
+
+.signup-verify-page__description {
+  margin-top: 6px;
+  color: var(--color-text-sub);
+  font-size: 14px;
+  line-height: 21px;
+  word-break: break-all;
+}
+
+.signup-verify-page__description strong {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.signup-verify-page__code {
+  margin-top: 28px;
+}
+
+.signup-verify-page__timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.signup-verify-page__timer {
+  color: var(--color-text-caption);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.signup-verify-page__timer span {
+  margin-left: 4px;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.signup-verify-page__timer--expired span {
+  color: var(--color-danger);
+}
+
+.signup-verify-page__resend {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-sub);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.signup-verify-page__resend:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.signup-verify-page__error {
+  margin-top: 8px;
+  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.signup-verify-page__notice {
+  margin-top: 24px;
+}
+
+.signup-verify-page__footer {
+  margin-top: auto;
+  padding-top: 28px;
+}

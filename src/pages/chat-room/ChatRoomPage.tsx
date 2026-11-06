@@ -23,7 +23,7 @@ import './ChatRoomPage.css';
 export default function ChatRoomPage() {
   const { roomId = '' } = useParams();
   const navigate = useNavigate();
-  const myUserId = useAuthStore((state) => state.userId);
+  const myUserId = useAuthStore((state) => state.user?.id ?? '');
   const { data: room, isError, refetch: refetchRoom } = useChatRoom(roomId);
   const {
     data: messages = [],

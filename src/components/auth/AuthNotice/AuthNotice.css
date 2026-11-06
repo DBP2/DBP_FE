@@ -1,0 +1,32 @@
+.auth-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+}
+
+.auth-notice__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.auth-notice__title {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+.auth-notice__text {
+  color: var(--color-text-caption);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  word-break: keep-all;
+}
+
+.auth-notice__title + .auth-notice__text {
+  margin-top: 2px;
+}
