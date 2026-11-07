@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router';
+import SearchPage from '@/pages/search/SearchPage';
 
 import Layout from '@/components/common/Layout/Layout';
 import ChatPage from '@/pages/chat/ChatPage';
@@ -29,6 +30,8 @@ export const router = createBrowserRouter([
       { path: ROUTES.SAFE_ZONE_SCAN, element: <SafeZoneScanPage /> },
       { path: ROUTES.SAFE_ZONE_CODE, element: <SafeZoneCodePage /> },
       { path: ROUTES.POST_SAFE_ZONE, element: <PostSafeZonePage /> },
+      { path: ROUTES.SEARCH, element: <SearchPage /> },
+      { path: ROUTES.CHAT_ROOM, element: <ChatRoomPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
