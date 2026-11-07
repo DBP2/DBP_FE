@@ -1,0 +1,139 @@
+.trade-record-sheet {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.trade-record-sheet__header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+  margin-top: 2px;
+}
+
+.trade-record-sheet__title {
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.trade-record-sheet__close {
+  width: 40px;
+  height: 40px;
+  margin-right: -10px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.trade-record-sheet__close::after {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  background: var(--color-text);
+  -webkit-mask: url('@/assets/images/exit.svg') center / contain no-repeat;
+  mask: url('@/assets/images/exit.svg') center / contain no-repeat;
+  content: '';
+}
+
+.trade-record-sheet__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  margin: 14px calc(var(--page-padding-x) * -1) 0;
+  padding: 0 var(--page-padding-x) 4px;
+  overflow-y: auto;
+}
+
+.trade-record-sheet__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trade-record-sheet__section-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.trade-record-sheet__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.trade-record-sheet__photo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trade-record-sheet__required {
+  color: var(--color-primary);
+}
+
+.trade-record-sheet__photo-hint {
+  color: var(--color-text-caption);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.trade-record-sheet__photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.trade-record-sheet__photo-add {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 100px;
+  border: 1px dashed #9db4f5;
+  border-radius: 14px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+.trade-record-sheet__photo-input {
+  display: none;
+}
+
+.trade-record-sheet__note {
+  color: var(--color-text-caption);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.trade-record-sheet__footer {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+}
+
+.trade-record-sheet__error {
+  color: var(--color-danger);
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
