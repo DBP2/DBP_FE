@@ -7,6 +7,7 @@ export const ROUTES = {
   CHAT_ROOM: '/chat/:roomId',
   MY: '/my',
   REPORT: '/report/:userId',
+  POST_SAFE_ZONE: '/posts/new/safe-zone',
 } as const;
 
 export const getChatRoomPath = (roomId: string) => `/chat/${roomId}`;

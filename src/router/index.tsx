@@ -6,6 +6,7 @@ import ChatRoomPage from '@/pages/chat-room/ChatRoomPage';
 import HomePage from '@/pages/home/HomePage';
 import MyPage from '@/pages/my/MyPage';
 import NotFoundPage from '@/pages/not-found/NotFoundPage';
+import PostSafeZonePage from '@/pages/post-safe-zone/PostSafeZonePage';
 import SafeZoneScanPage from '@/pages/safe-zone-scan/SafeZoneScanPage';
 import TradePage from '@/pages/trade/TradePage';
 import { ROUTES } from '@/router/routes';
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
     children: [
       { path: ROUTES.CHAT_ROOM, element: <ChatRoomPage /> },
       { path: ROUTES.SAFE_ZONE_SCAN, element: <SafeZoneScanPage /> },
+      { path: ROUTES.POST_SAFE_ZONE, element: <PostSafeZonePage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
