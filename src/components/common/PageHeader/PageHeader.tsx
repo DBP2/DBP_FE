@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 
-import backIcon from '@/assets/images/backBtn.svg';
+import defaultBackIcon from '@/assets/images/backBtn.svg';
 import { cn } from '@/utils/cn';
 
 import './PageHeader.css';
@@ -11,20 +11,32 @@ interface PageHeaderProps {
   subtitle?: ReactNode;
   right?: ReactNode;
   onBack?: () => void;
+  backIcon?: string;
+  backLabel?: string;
+  variant?: 'default' | 'overlay';
   className?: string;
 }
 
-export default function PageHeader({ title, subtitle, right, onBack, className }: PageHeaderProps) {
+export default function PageHeader({
+  title,
+  subtitle,
+  right,
+  onBack,
+  backIcon = defaultBackIcon,
+  backLabel = '뒤로가기',
+  variant = 'default',
+  className,
+}: PageHeaderProps) {
   const navigate = useNavigate();
   const handleBack = onBack ?? (() => navigate(-1));
 
   return (
-    <header className={cn('page-header', className)}>
+    <header className={cn('page-header', `page-header--${variant}`, className)}>
       <button
         type="button"
         className="page-header__button"
         onClick={handleBack}
-        aria-label="뒤로가기"
+        aria-label={backLabel}
       >
         <img src={backIcon} alt="" width={24} height={24} />
       </button>

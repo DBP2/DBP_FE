@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import safeZoneInfoImage from '@/assets/images/safeZone_info.svg';
+import BottomBar from '@/components/common/BottomBar/BottomBar';
 import Button from '@/components/common/Button/Button';
 import ErrorState from '@/components/common/ErrorState/ErrorState';
 import OptionCard from '@/components/common/OptionCard/OptionCard';
@@ -115,8 +116,7 @@ export default function PostSafeZonePage() {
         </div>
       </div>
 
-      <div className="post-safe-zone-page__footer">
-        {errorMessage && <p className="post-safe-zone-page__error">{errorMessage}</p>}
+      <BottomBar errorMessage={errorMessage}>
         <Button
           fullWidth
           disabled={isPending || selectedIds.length === 0 || createPost.isPending}
@@ -124,7 +124,7 @@ export default function PostSafeZonePage() {
         >
           {selectedIds.length > 0 ? `판매 등록하기 (${selectedIds.length}곳)` : '판매 등록하기'}
         </Button>
-      </div>
+      </BottomBar>
     </section>
   );
 }
