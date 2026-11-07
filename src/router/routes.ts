@@ -1,5 +1,6 @@
 export const ROUTES = {
   HOME: '/',
+  SEARCH: '/search',
   TRADE: '/trade',
   TRADE_DETAIL: '/trade/:tradeId',
   SAFE_ZONE_SCAN: '/trade/:tradeId/scan',
