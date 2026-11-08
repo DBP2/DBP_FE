@@ -1,23 +1,17 @@
-import { useState } from 'react';
+import { useFavorites } from '@/hooks/useFavorites';
 import { useNavigate } from 'react-router';
 
 import searchIcon from '@/assets/images/search.svg';
 import bannerImage from '@/assets/images/banner.svg';
 import Thumbnail from '@/components/common/Thumbnail/Thumbnail';
 import { mockPosts } from '@/mocks/posts';
-import { ROUTES } from '@/router/routes';
+import { getPostDetailPath, ROUTES } from '@/router/routes';
 
 import './HomePage.css';
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const [favorites, setFavorites] = useState<number[]>([]);
-
-  const toggleFavorite = (postId: number) => {
-    setFavorites((previous) =>
-      previous.includes(postId) ? previous.filter((id) => id !== postId) : [...previous, postId],
-    );
-  };
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   return (
     <section className="home-page">
@@ -45,10 +39,24 @@ export default function HomePage() {
 
       <div className="home-page__post-list">
         {mockPosts.map((post) => {
-          const isFavorite = favorites.includes(post.id);
+          const isPostFavorite = isFavorite(post.id);
 
           return (
-            <div className="home-page__post-card" key={post.id}>
+            <div
+              className="home-page__post-card"
+              key={post.id}
+              role="link"
+              tabIndex={0}
+              onClick={() => navigate(getPostDetailPath(String(post.id)))}
+              onKeyDown={(event) => {
+                if (event.target !== event.currentTarget) return;
+
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  navigate(getPostDetailPath(String(post.id)));
+                }
+              }}
+            >
               <Thumbnail src={post.imageUrl} alt={post.title} size={76} radius={10} />
 
               <div className="home-page__post-info">
@@ -64,18 +72,21 @@ export default function HomePage() {
                   <button
                     type="button"
                     className={`home-page__favorite ${
-                      isFavorite ? 'home-page__favorite--active' : ''
+                      isPostFavorite ? 'home-page__favorite--active' : ''
                     }`}
-                    onClick={() => toggleFavorite(post.id)}
-                    aria-label={isFavorite ? '찜 취소' : '찜하기'}
-                    aria-pressed={isFavorite}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleFavorite(post.id);
+                    }}
+                    aria-label={isPostFavorite ? '찜 취소' : '찜하기'}
+                    aria-pressed={isPostFavorite}
                   >
                     <svg
                       width="18"
                       height="18"
                       viewBox="0 0 24 24"
-                      fill={isFavorite ? '#EF4444' : 'none'}
-                      stroke={isFavorite ? '#EF4444' : '#6B7684'}
+                      fill={isPostFavorite ? '#EF4444' : 'none'}
+                      stroke={isPostFavorite ? '#EF4444' : '#6B7684'}
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -84,7 +95,7 @@ export default function HomePage() {
                       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
                     </svg>
 
-                    <span>{post.favoriteCount + (isFavorite ? 1 : 0)}</span>
+                    <span>{post.favoriteCount + (isPostFavorite ? 1 : 0)}</span>
                   </button>
                 </div>
               </div>

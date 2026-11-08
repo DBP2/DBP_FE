@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router';
 import searchIcon from '@/assets/images/search.svg';
 import Thumbnail from '@/components/common/Thumbnail/Thumbnail';
 import { mockPosts } from '@/mocks/posts';
-import { ROUTES } from '@/router/routes';
+import { getPostDetailPath, ROUTES } from '@/router/routes';
+import { useFavorites } from '@/hooks/useFavorites';
 
 import './SearchPage.css';
 
@@ -20,7 +21,7 @@ export default function SearchPage() {
   const [maxPrice, setMaxPrice] = useState('');
   const [sort, setSort] = useState<SortType>('relevance');
   const [showFilters, setShowFilters] = useState(false);
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const { favorites, isFavorite, toggleFavorite } = useFavorites();
 
   const departments = [
     '전체',
@@ -35,12 +36,6 @@ export default function SearchPage() {
     '문화지식융합대학',
     '미래인재융합대학',
   ];
-
-  const toggleFavorite = (postId: number) => {
-    setFavorites((previous) =>
-      previous.includes(postId) ? previous.filter((id) => id !== postId) : [...previous, postId],
-    );
-  };
 
   const resetFilters = () => {
     setDepartment('전체');
@@ -235,10 +230,24 @@ export default function SearchPage() {
           </div>
         ) : (
           filteredPosts.map((post) => {
-            const isFavorite = favorites.includes(post.id);
+            const isPostFavorite = isFavorite(post.id);
 
             return (
-              <article className="search-page__post-card" key={post.id}>
+              <article
+                className="search-page__post-card"
+                key={post.id}
+                role="link"
+                tabIndex={0}
+                onClick={() => navigate(getPostDetailPath(String(post.id)))}
+                onKeyDown={(event) => {
+                  if (event.target !== event.currentTarget) return;
+
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    navigate(getPostDetailPath(String(post.id)));
+                  }
+                }}
+              >
                 <Thumbnail src={post.imageUrl} alt={post.title} size={84} radius={10} />
 
                 <div className="search-page__post-info">
@@ -262,16 +271,19 @@ export default function SearchPage() {
                     <button
                       type="button"
                       className="search-page__favorite"
-                      onClick={() => toggleFavorite(post.id)}
-                      aria-label={isFavorite ? '찜 취소' : '찜하기'}
-                      aria-pressed={isFavorite}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        toggleFavorite(post.id);
+                      }}
+                      aria-label={isPostFavorite ? '찜 취소' : '찜하기'}
+                      aria-pressed={isPostFavorite}
                     >
                       <svg
                         width="18"
                         height="18"
                         viewBox="0 0 24 24"
-                        fill={isFavorite ? '#EF4444' : 'none'}
-                        stroke={isFavorite ? '#EF4444' : '#6B7684'}
+                        fill={isPostFavorite ? '#EF4444' : 'none'}
+                        stroke={isPostFavorite ? '#EF4444' : '#6B7684'}
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -280,7 +292,7 @@ export default function SearchPage() {
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
                       </svg>
 
-                      <span>{post.favoriteCount + (isFavorite ? 1 : 0)}</span>
+                      <span>{post.favoriteCount + (isPostFavorite ? 1 : 0)}</span>
                     </button>
                   </div>
                 </div>

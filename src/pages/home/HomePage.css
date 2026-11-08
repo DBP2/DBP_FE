@@ -80,6 +80,12 @@
   padding: 12px;
   border-radius: var(--radius-lg);
   background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.home-page__post-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .home-page__post-info {
