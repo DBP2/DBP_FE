@@ -8,3 +8,134 @@
   letter-spacing: -0.7px;
   color: var(--color-text);
 }
+
+.home-page__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  color: var(--color-text-caption);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-page__search img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.home-page__search:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.home-page__banner {
+  margin-top: 16px;
+}
+
+.home-page__banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+
+.home-page__list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+
+.home-page__list-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.home-page__sort {
+  font-size: 13px;
+  color: var(--color-text-caption);
+}
+
+.home-page__post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.home-page__post-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.home-page__post-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.home-page__post-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-page__post-info h3 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.home-page__post-info p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-text-caption);
+}
+
+.home-page__post-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.home-page__post-bottom strong {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.home-page__favorite {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-caption);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.home-page__favorite svg {
+  flex-shrink: 0;
+}
+
+.home-page__favorite--active {
+  color: #ef4444;
+}
