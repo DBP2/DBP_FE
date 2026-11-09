@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { ApiError } from '@/api/client';
 import appIcon from '@/assets/images/app_icon.png';
 import AuthNotice from '@/components/auth/AuthNotice/AuthNotice';
+import BottomBar from '@/components/common/BottomBar/BottomBar';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
@@ -50,54 +51,55 @@ export default function LoginPage() {
     <section className="login-page">
       <PageHeader onBack={() => navigate(ROUTES.WELCOME)} />
       <form className="login-page__form" onSubmit={handleSubmit} noValidate>
-        <img className="login-page__icon" src={appIcon} alt="" width={56} height={56} />
-        <h1 className="login-page__title">다시 만나서 반가워요!</h1>
-        <p className="login-page__description">
-          학교 이메일로 로그인하고
-          <br />
-          학우들의 교재와 물품을 둘러보세요.
-        </p>
+        <div className="login-page__body">
+          <img className="login-page__icon" src={appIcon} alt="" width={56} height={56} />
+          <h1 className="login-page__title">다시 만나서 반가워요!</h1>
+          <p className="login-page__description">
+            학교 이메일로 로그인하고
+            <br />
+            학우들의 교재와 물품을 둘러보세요.
+          </p>
 
-        <div className="login-page__fields">
-          <TextField
-            label="학교 이메일"
-            suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
-            placeholder="이메일 아이디"
-            value={emailId}
-            onChange={(event) => {
-              setEmailId(event.target.value);
-              reset();
-            }}
-            autoComplete="username"
-            autoCapitalize="off"
-          />
-          <TextField
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호를 입력해 주세요"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-              reset();
-            }}
-            autoComplete="current-password"
-            error={loginError}
-          />
+          <div className="login-page__fields">
+            <TextField
+              label="학교 이메일"
+              suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
+              placeholder="이메일 아이디"
+              value={emailId}
+              onChange={(event) => {
+                setEmailId(event.target.value);
+                reset();
+              }}
+              autoComplete="username"
+              autoCapitalize="off"
+            />
+            <TextField
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호를 입력해 주세요"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                reset();
+              }}
+              autoComplete="current-password"
+              error={loginError}
+            />
+          </div>
+
+          <Checkbox
+            className="login-page__keep"
+            checked={keepLogin}
+            onChange={(event) => setKeepLogin(event.target.checked)}
+          >
+            로그인 상태 유지
+          </Checkbox>
+
+          <AuthNotice className="login-page__notice">
+            학교 이메일 인증을 마친 계정만 로그인할 수 있어요.
+          </AuthNotice>
         </div>
-
-        <Checkbox
-          className="login-page__keep"
-          checked={keepLogin}
-          onChange={(event) => setKeepLogin(event.target.checked)}
-        >
-          로그인 상태 유지
-        </Checkbox>
-
-        <AuthNotice className="login-page__notice">
-          학교 이메일 인증을 마친 계정만 로그인할 수 있어요.
-        </AuthNotice>
-
-        <div className="login-page__footer">
+        <BottomBar>
           <Button type="submit" fullWidth disabled={!canSubmit}>
             로그인
           </Button>
@@ -111,7 +113,7 @@ export default function LoginPage() {
               회원가입
             </Link>
           </div>
-        </div>
+        </BottomBar>
       </form>
     </section>
   );

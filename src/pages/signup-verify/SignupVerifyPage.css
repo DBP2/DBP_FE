@@ -12,7 +12,13 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 8px var(--page-padding-x) calc(24px + env(safe-area-inset-bottom));
+}
+
+.signup-verify-page__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 8px var(--page-padding-x) 24px;
 }
 
 .signup-verify-page__icon {
@@ -101,9 +107,4 @@
 
 .signup-verify-page__notice {
   margin-top: 24px;
-}
-
-.signup-verify-page__footer {
-  margin-top: auto;
-  padding-top: 28px;
 }

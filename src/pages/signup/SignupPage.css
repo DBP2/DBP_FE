@@ -12,7 +12,13 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 8px var(--page-padding-x) calc(24px + env(safe-area-inset-bottom));
+}
+
+.signup-page__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 8px var(--page-padding-x) 24px;
 }
 
 .signup-page__title {
@@ -51,9 +57,4 @@
 .signup-page__required {
   color: var(--color-primary);
   font-weight: 700;
-}
-
-.signup-page__footer {
-  margin-top: auto;
-  padding-top: 28px;
 }

@@ -12,7 +12,13 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 12px var(--page-padding-x) calc(24px + env(safe-area-inset-bottom));
+}
+
+.login-page__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 12px var(--page-padding-x) 24px;
 }
 
 .login-page__icon {
@@ -49,17 +55,12 @@
   margin-top: 20px;
 }
 
-.login-page__footer {
-  margin-top: auto;
-  padding-top: 32px;
-}
-
 .login-page__links {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 16px;
+  margin-top: 4px;
 }
 
 .login-page__link {
