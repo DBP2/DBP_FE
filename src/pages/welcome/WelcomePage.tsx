@@ -4,7 +4,7 @@ import appIcon from '@/assets/images/app_icon.png';
 import mailIcon from '@/assets/images/mail.svg';
 import mascotImage from '@/assets/images/mascot.png';
 import messageIcon from '@/assets/images/message.svg';
-import qrIcon from '@/assets/images/qr.svg';
+import qrIcon from '@/assets/images/qr_blue.svg';
 import Button from '@/components/common/Button/Button';
 import { SCHOOL_NAME } from '@/constants/school';
 import { ROUTES } from '@/router/routes';

@@ -1,11 +1,11 @@
 /// <reference types="vitest/config" />
 import { fileURLToPath, URL } from 'node:url';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [react(), mode === 'mobile' && basicSsl()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -20,4 +20,4 @@ export default defineConfig({
     css: true,
     passWithNoTests: true,
   },
-});
+}));

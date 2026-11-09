@@ -7,6 +7,8 @@ import HomePage from '@/pages/home/HomePage';
 import LoginPage from '@/pages/login/LoginPage';
 import MyPage from '@/pages/my/MyPage';
 import NotFoundPage from '@/pages/not-found/NotFoundPage';
+import PostSafeZonePage from '@/pages/post-safe-zone/PostSafeZonePage';
+import SafeZoneCodePage from '@/pages/safe-zone-code/SafeZoneCodePage';
 import SafeZoneScanPage from '@/pages/safe-zone-scan/SafeZoneScanPage';
 import SignupPage from '@/pages/signup/SignupPage';
 import SignupCompletePage from '@/pages/signup-complete/SignupCompletePage';
@@ -53,6 +55,8 @@ export const router = createBrowserRouter([
           { path: ROUTES.SIGNUP_COMPLETE, element: <SignupCompletePage /> },
           { path: ROUTES.CHAT_ROOM, element: <ChatRoomPage /> },
           { path: ROUTES.SAFE_ZONE_SCAN, element: <SafeZoneScanPage /> },
+          { path: ROUTES.SAFE_ZONE_CODE, element: <SafeZoneCodePage /> },
+          { path: ROUTES.POST_SAFE_ZONE, element: <PostSafeZonePage /> },
         ],
       },
     ],
