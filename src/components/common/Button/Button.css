@@ -41,3 +41,8 @@
   background: var(--color-primary-light);
   color: var(--color-primary);
 }
+
+.button--danger {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
