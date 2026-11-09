@@ -203,14 +203,17 @@ export default function PostFormPage() {
 		};
 	}, [postId]);
 
-	useEffect(() => {
-		const urls = images.map((file) => URL.createObjectURL(file));
-		setPreviews(urls);
+    useEffect(() => {
+        const urls = images.map((file) => URL.createObjectURL(file));
 
-		return () => {
-			urls.forEach((url) => URL.revokeObjectURL(url));
-		};
-	}, [images]);
+        queueMicrotask(() => {
+            setPreviews(urls);
+        });
+
+        return () => {
+            urls.forEach((url) => URL.revokeObjectURL(url));
+        };
+    }, [images]);
 
 	function updateField<K extends keyof FormState>(
 		key: K,
