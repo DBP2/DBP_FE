@@ -1,0 +1,269 @@
+
+.post-form-page {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 0 24px;
+  background: #fff;
+  color: #202632;
+  box-sizing: border-box;
+}
+
+.post-form-page *,
+.post-form-page *::before,
+.post-form-page *::after {
+  box-sizing: border-box;
+}
+
+.post-form-page button,
+.post-form-page input,
+.post-form-page select,
+.post-form-page textarea {
+  font: inherit;
+}
+
+.post-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.post-form-header h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.post-form-close,
+.post-form-header > button {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: #596474;
+  cursor: pointer;
+}
+
+.post-form-close {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.post-form-draft {
+  color: #6675e8 !important;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.post-form-section {
+  padding: 24px 20px;
+  border-bottom: 8px solid #f6f7f9;
+}
+
+.post-form-section h2 {
+  margin: 0 0 18px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.post-form-section > p {
+  margin: -8px 0 16px;
+  font-size: 13px;
+  color: #7b8492;
+}
+
+.post-form-label,
+.post-form-section > label:not(.post-form-image-add) {
+  display: block;
+  margin: 18px 0 9px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #303947;
+}
+
+.post-form-label:first-child,
+.post-form-section > label:first-child {
+  margin-top: 0;
+}
+
+.post-form-label span {
+  color: #ed6868;
+}
+
+.post-form-input,
+.post-form-page input[type='text'],
+.post-form-page input[type='number'],
+.post-form-page select,
+.post-form-page textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+  border: 1px solid #e1e5eb;
+  border-radius: 10px;
+  background: #fff;
+  color: #202632;
+  outline: none;
+}
+
+.post-form-page input:focus,
+.post-form-page select:focus,
+.post-form-page textarea:focus {
+  border-color: #6778ed;
+}
+
+.post-form-page input::placeholder,
+.post-form-page textarea::placeholder {
+  color: #a1a9b5;
+}
+
+.post-form-page textarea {
+  display: block;
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.post-form-image-list,
+.post-form-images {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+}
+
+.post-form-image-add,
+.post-form-image-item {
+  position: relative;
+  display: flex;
+  flex: 0 0 84px;
+  width: 84px;
+  height: 84px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid #dfe4eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8f9fb;
+}
+
+.post-form-image-add {
+  color: #8993a1;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.post-form-image-add img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.post-form-image-item > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-form-cover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4px 0;
+  background: rgba(24, 30, 40, 0.72);
+  color: white;
+  font-size: 11px;
+  text-align: center;
+}
+
+.post-form-image-remove,
+.post-form-image-item > button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(28, 32, 40, 0.7);
+  color: white;
+  cursor: pointer;
+}
+
+.post-form-page input[type='radio'],
+.post-form-page input[type='checkbox'] {
+  width: 17px;
+  height: 17px;
+  min-height: auto;
+  accent-color: #6375e9;
+}
+
+.post-form-page label:has(> input[type='radio']),
+.post-form-page label:has(> input[type='checkbox']) {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 4px 14px 8px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.post-form-page .bottom-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px 20px max(12px, env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1px solid #eef0f3;
+}
+
+.post-form-page .post-form-submit {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 12px;
+  background: #6475e9;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.post-form-page .post-form-submit:disabled,
+.post-form-page .post-form-draft:disabled,
+.post-form-page .post-form-image-add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 390px) {
+  .post-form-section {
+    padding: 22px 16px;
+  }
+
+  .post-form-header {
+    padding: 12px 16px;
+  }
+
+  .post-form-image-add,
+  .post-form-image-item {
+    width: 76px;
+    height: 76px;
+    flex-basis: 76px;
+  }
+}

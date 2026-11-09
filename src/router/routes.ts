@@ -1,5 +1,9 @@
 export const ROUTES = {
   HOME: '/',
+  SEARCH: '/search',
+  POST_DETAIL: '/posts/:postId',
+  POST_CREATE: '/posts/new',
+  POST_EDIT: '/posts/:postId/edit',
   TRADE: '/trade',
   TRADE_DETAIL: '/trade/:tradeId',
   SAFE_ZONE_SCAN: '/trade/:tradeId/scan',
@@ -20,3 +24,7 @@ export const getReportPath = (userId: string) => `/report/${userId}`;
 export const getSafeZoneScanPath = (tradeId: string) => `/trade/${tradeId}/scan`;
 
 export const getSafeZoneCodePath = (tradeId: string) => `/trade/${tradeId}/scan/code`;
+
+export const getPostDetailPath = (postId: string) => `/posts/${postId}`;
+
+export const getPostEditPath = (postId: string) => `/posts/${postId}/edit`;
