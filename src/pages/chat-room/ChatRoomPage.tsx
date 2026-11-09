@@ -55,6 +55,7 @@ export default function ChatRoomPage() {
     <section className="chat-room-page">
       <div className="chat-room-page__top">
         <PageHeader
+          className="chat-room-page__header"
           title={
             <>
               <span className="chat-room-page__name">{partner.name}</span>
