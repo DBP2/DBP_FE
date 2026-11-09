@@ -13,6 +13,7 @@ import SafeZoneScanPage from '@/pages/safe-zone-scan/SafeZoneScanPage';
 import SearchPage from '@/pages/search/SearchPage';
 import TradePage from '@/pages/trade/TradePage';
 import { ROUTES } from '@/router/routes';
+import PostFormPage from '@/pages/post-form/PostFormPage';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,8 @@ export const router = createBrowserRouter([
       { path: ROUTES.POST_SAFE_ZONE, element: <PostSafeZonePage /> },
       { path: ROUTES.SEARCH, element: <SearchPage /> },
       { path: ROUTES.POST_DETAIL, element: <PostDetailPage /> },
+      { path: ROUTES.POST_CREATE, element: <PostFormPage /> },
+      { path: ROUTES.POST_EDIT, element: <PostFormPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
