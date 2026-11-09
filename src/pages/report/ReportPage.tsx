@@ -1,19 +1,22 @@
 import { useId, useState, type FormEvent } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router';
 
 import alertIcon from '@/assets/images/alert_orange.svg';
 import cameraIcon from '@/assets/images/camera_green.svg';
 import Avatar from '@/components/common/Avatar/Avatar';
+import BottomBar from '@/components/common/BottomBar/BottomBar';
 import Button from '@/components/common/Button/Button';
 import ErrorState from '@/components/common/ErrorState/ErrorState';
+import OptionCard from '@/components/common/OptionCard/OptionCard';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
-import ReportTypeOption from '@/components/report/ReportTypeOption/ReportTypeOption';
+import TextArea from '@/components/common/TextArea/TextArea';
 import {
   REPORT_REASON_MAX_LENGTH,
   REPORT_REASON_MIN_LENGTH,
   REPORT_TYPE_OPTIONS,
 } from '@/constants/report';
 import { useReportTarget, useSubmitReport } from '@/hooks/useReport';
+import { ROUTES } from '@/router/routes';
 import type { ReportType } from '@/types/report';
 import { cn } from '@/utils/cn';
 
@@ -29,6 +32,7 @@ export default function ReportPage() {
   const [searchParams] = useSearchParams();
   const tradeId = searchParams.get('tradeId');
   const navigate = useNavigate();
+  const location = useLocation();
   const reasonId = useId();
   const { data: target, isError, refetch } = useReportTarget(userId, tradeId);
   const { mutate, isPending, isSuccess, isError: isSubmitError } = useSubmitReport();
@@ -39,6 +43,15 @@ export default function ReportPage() {
   const selectedOption = REPORT_TYPE_OPTIONS.find((option) => option.value === type);
   const isReasonValid = reason.trim().length >= REPORT_REASON_MIN_LENGTH;
   const canSubmit = type !== null && isReasonValid && !isPending;
+
+  // 링크로 바로 들어와 이전 기록이 없으면 앱 밖으로 나가지 않도록 채팅 목록으로 이동
+  const handleDone = () => {
+    if (location.key === 'default') {
+      navigate(ROUTES.CHAT, { replace: true });
+    } else {
+      navigate(-1);
+    }
+  };
 
   if (isError) {
     return (
@@ -60,7 +73,7 @@ export default function ReportPage() {
           <br />
           처리 결과를 알려드릴게요.
         </p>
-        <Button className="report-page__done-button" fullWidth onClick={() => navigate(-1)}>
+        <Button className="report-page__done-button" fullWidth onClick={handleDone}>
           확인
         </Button>
       </section>
@@ -95,12 +108,14 @@ export default function ReportPage() {
           <fieldset className="report-page__types">
             <legend className="report-page__section-title">어떤 문제가 있었나요?</legend>
             {REPORT_TYPE_OPTIONS.map((option) => (
-              <ReportTypeOption
+              <OptionCard
                 key={option.value}
-                option={option}
+                type="radio"
                 name="report-type"
+                title={option.label}
+                description={option.description}
                 checked={type === option.value}
-                onChange={setType}
+                onChange={() => setType(option.value)}
               />
             ))}
           </fieldset>
@@ -119,12 +134,9 @@ export default function ReportPage() {
             <label className="report-page__label" htmlFor={reasonId}>
               상세 사유 <span className="report-page__required">*</span>
             </label>
-            <textarea
+            <TextArea
               id={reasonId}
-              className={cn(
-                'report-page__textarea',
-                isReasonTouched && !isReasonValid && 'report-page__textarea--error',
-              )}
+              className={cn(isReasonTouched && !isReasonValid && 'report-page__textarea--error')}
               placeholder={`상황을 구체적으로 적어 주세요 (${REPORT_REASON_MIN_LENGTH}자 이상)`}
               value={reason}
               maxLength={REPORT_REASON_MAX_LENGTH}
@@ -147,19 +159,17 @@ export default function ReportPage() {
               <span className="report-page__evidence-badge">첨부됨</span>
             </div>
           )}
-
-          {isSubmitError && (
-            <p className="report-page__error" role="alert">
-              신고를 접수하지 못했어요. 잠시 후 다시 시도해 주세요
-            </p>
-          )}
         </div>
 
-        <div className="report-page__footer">
+        <BottomBar
+          errorMessage={
+            isSubmitError ? '신고를 접수하지 못했어요. 잠시 후 다시 시도해 주세요.' : null
+          }
+        >
           <Button type="submit" variant="danger" fullWidth disabled={!canSubmit}>
             신고 접수
           </Button>
-        </div>
+        </BottomBar>
       </form>
     </section>
   );

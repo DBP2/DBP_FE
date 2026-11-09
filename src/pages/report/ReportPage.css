@@ -113,30 +113,8 @@
   color: var(--color-primary);
 }
 
-.report-page__textarea {
-  min-height: 120px;
-  padding: 16px 20px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  outline: none;
-  background: var(--color-white);
-  color: var(--color-text);
-  font: inherit;
-  font-size: 15px;
-  line-height: 23px;
-  resize: none;
-}
-
-.report-page__textarea::placeholder {
-  color: var(--color-gray-400);
-}
-
-.report-page__textarea:focus {
-  border-color: var(--color-primary);
-}
-
 .report-page__textarea--error,
-.report-page__textarea--error:focus {
+.report-page__textarea--error:focus-within {
   border-color: var(--color-danger);
 }
 
@@ -178,14 +156,6 @@
   color: var(--color-green);
   font-size: 12px;
   font-weight: 700;
-}
-
-.report-page__footer {
-  position: sticky;
-  bottom: 0;
-  padding: 16px var(--page-padding-x) calc(16px + env(safe-area-inset-bottom));
-  background: var(--color-white);
-  box-shadow: 0 -4px 16px rgb(53 99 224 / 0.06);
 }
 
 .report-page--done {
