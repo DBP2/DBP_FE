@@ -1,0 +1,18 @@
+.select-field__select {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 20px 0 0;
+  border: none;
+  outline: none;
+  background: url('@/assets/images/chevron_down.svg') no-repeat right center / 16px;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 15px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-field__select--empty {
+  color: var(--color-gray-400);
+}
