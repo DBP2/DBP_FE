@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 
+import { ApiError } from '@/api/client';
 import exitIcon from '@/assets/images/exit.svg';
 import flashIcon from '@/assets/images/flash.svg';
 import mascotImage from '@/assets/images/qr_icon.svg';
@@ -47,7 +48,11 @@ export default function SafeZoneScanPage() {
       navigator.vibrate?.(80);
       setVerification(tradeId, result);
     } catch (error) {
-      setScanError('QR을 확인하지 못했어요. 다시 비춰 주세요.');
+      setScanError(
+        error instanceof ApiError && error.status === 400
+          ? error.message
+          : 'QR을 확인하지 못했어요. 다시 비춰 주세요.',
+      );
       throw error;
     }
   };

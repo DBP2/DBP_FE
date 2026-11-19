@@ -55,4 +55,15 @@ export const CHAT_ROOMS_MOCK: ChatRoom[] = [
     lastMessageAt: new Date(new Date().getFullYear(), 8, 20, 14, 0).toISOString(),
     unreadCount: 0,
   },
+  {
+    id: '5',
+    partner: { id: 'user-5', name: '정유진', isVerified: true },
+    myRole: 'buyer',
+    tradeStatus: null,
+    postTitle: '자료구조 교재',
+    thumbnailUrl: bookGreen,
+    lastMessage: '아직 판매 중인가요?',
+    lastMessageAt: ago(30 * MINUTE),
+    unreadCount: 0,
+  },
 ];

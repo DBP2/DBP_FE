@@ -19,7 +19,7 @@ export function verifySafeZone(
   }
   return Promise.resolve({
     safeZone: SCANNED_SAFE_ZONE_MOCK,
-    lockerNumber: '3번 칸',
+    lockerNumber: null,
     verifiedAt: new Date().toISOString(),
   });
 }
