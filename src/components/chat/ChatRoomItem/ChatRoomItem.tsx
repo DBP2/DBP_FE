@@ -23,7 +23,7 @@ interface ChatRoomItemProps {
 
 export default function ChatRoomItem({ room }: ChatRoomItemProps) {
   const { partner, tradeStatus, unreadCount } = room;
-  const statusTag = STATUS_TAG[tradeStatus];
+  const statusTag = tradeStatus ? STATUS_TAG[tradeStatus] : null;
   const isUnread = unreadCount > 0;
 
   return (

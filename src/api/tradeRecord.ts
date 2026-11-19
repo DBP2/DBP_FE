@@ -7,7 +7,9 @@ const recordStore = new Map<string, TradeRecord>();
 
 export function getTradeRecordInfo(tradeId: string): Promise<TradeRecordInfo> {
   const room = CHAT_ROOM_DETAILS_MOCK.find((item) => item.tradeId === tradeId);
-  if (!room) return Promise.reject(new ApiError(404, '거래를 찾을 수 없어요'));
+  if (!room || !room.tradeStatus) {
+    return Promise.reject(new ApiError(404, '거래를 찾을 수 없어요'));
+  }
   return Promise.resolve({
     tradeId,
     roomId: room.id,
@@ -32,7 +34,7 @@ export function saveTradeRecord(
     id: crypto.randomUUID(),
     tradeId,
     safeZone,
-    lockerNumber: '3번 칸',
+    lockerNumber: null,
     action: request.action,
     photoUrls: request.photos.map((photo) => URL.createObjectURL(photo)),
     recordedAt: new Date().toISOString(),

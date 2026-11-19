@@ -37,4 +37,12 @@ export const CHAT_ROOM_DETAILS_MOCK: ChatRoomDetail[] = [
     partner: { id: 'user-1', name: '이민서', isVerified: false, trustGrade: 'A' },
     post: { id: 'post-4', title: '미시경제학 2판', price: 8000, thumbnailUrl: bookPlum },
   },
+  {
+    id: '5',
+    tradeId: null,
+    tradeStatus: null,
+    myRole: 'buyer',
+    partner: { id: 'user-5', name: '정유진', isVerified: true, trustGrade: null },
+    post: { id: 'post-5', title: '자료구조 교재', price: 7000, thumbnailUrl: bookGreen },
+  },
 ];

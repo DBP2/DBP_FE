@@ -43,7 +43,7 @@ export default function SafeZoneCodePage() {
     } catch (error) {
       setErrorMessage(
         error instanceof ApiError && error.status === 400
-          ? '코드가 맞지 않아요. 보관함 옆 숫자를 다시 확인해 주세요.'
+          ? error.message
           : '코드를 확인하지 못했어요. 잠시 후 다시 시도해 주세요.',
       );
     }
