@@ -12,7 +12,7 @@ export interface ChatRoom {
   id: string;
   partner: ChatPartner;
   myRole: ChatRole;
-  tradeStatus: TradeStatus;
+  tradeStatus: TradeStatus | null;
   postTitle: string;
   thumbnailUrl: string;
   lastMessage: string;
@@ -33,8 +33,8 @@ export interface ChatRoomPost {
 
 export interface ChatRoomDetail {
   id: string;
-  tradeId: string;
-  tradeStatus: TradeStatus;
+  tradeId: string | null;
+  tradeStatus: TradeStatus | null;
   myRole: ChatRole;
   partner: ChatRoomPartner;
   post: ChatRoomPost;

@@ -1,3 +1,5 @@
+import { useAuthStore } from '@/store/authStore';
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export class ApiError extends Error {
@@ -11,13 +13,20 @@ export class ApiError extends Error {
 }
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const isFormData = init?.body instanceof FormData;
   const res = await fetch(`${BASE_URL}${path}`, {
     ...init,
-    headers: { 'Content-Type': 'application/json', ...init?.headers },
+    credentials: 'include',
+    headers: {
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+      'X-User-Id': useAuthStore.getState().userId,
+      ...init?.headers,
+    },
   });
 
   if (!res.ok) {
-    throw new ApiError(res.status, await res.text());
+    const body = (await res.json().catch(() => null)) as { message?: string } | null;
+    throw new ApiError(res.status, body?.message ?? res.statusText);
   }
 
   if (res.status === 204) return undefined as T;

@@ -7,5 +7,5 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>(() => ({
-  userId: MY_USER_ID,
+  userId: import.meta.env.VITE_TEMP_USER_ID ?? MY_USER_ID,
 }));

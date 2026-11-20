@@ -21,6 +21,7 @@ export function useChatMessages(roomId: string) {
   return useQuery({
     queryKey: QUERY_KEYS.chatMessages(roomId),
     queryFn: () => getChatMessages(roomId),
+    refetchInterval: 3000,
   });
 }
 

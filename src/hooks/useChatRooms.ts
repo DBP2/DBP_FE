@@ -7,5 +7,6 @@ export function useChatRooms() {
   return useQuery({
     queryKey: QUERY_KEYS.chatRooms,
     queryFn: getChatRooms,
+    refetchInterval: 10000,
   });
 }
