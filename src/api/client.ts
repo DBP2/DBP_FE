@@ -19,7 +19,7 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
     credentials: 'include',
     headers: {
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      'X-User-Id': useAuthStore.getState().userId,
+      'X-User-Id': useAuthStore.getState().user?.id ?? '',
       ...init?.headers,
     },
   });
