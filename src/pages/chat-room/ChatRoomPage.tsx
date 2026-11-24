@@ -23,7 +23,7 @@ import './ChatRoomPage.css';
 export default function ChatRoomPage() {
   const { roomId = '' } = useParams();
   const navigate = useNavigate();
-  const myUserId = useAuthStore((state) => state.userId);
+  const myUserId = useAuthStore((state) => state.user?.id ?? '');
   const { data: room, isError, refetch: refetchRoom } = useChatRoom(roomId);
   const {
     data: messages = [],
@@ -69,7 +69,7 @@ export default function ChatRoomPage() {
             <button
               type="button"
               className="chat-room-page__report"
-              onClick={() => navigate(getReportPath(partner.id))}
+              onClick={() => navigate(getReportPath(partner.id, room.tradeId))}
               aria-label="신고하기"
             >
               <img src={reportIcon} alt="" width={16} height={16} />
