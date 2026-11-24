@@ -88,7 +88,7 @@ export default function ChatRoomPage() {
         <ChatMessageList messages={messages} partner={partner} myUserId={myUserId} />
       )}
       <ChatComposer
-        tradeId={room.tradeId}
+        tradeId={room.tradeStatus === 'accepted' ? room.tradeId : null}
         disabled={sendText.isPending}
         onSendText={sendText.mutateAsync}
         onSendImage={sendImage.mutateAsync}

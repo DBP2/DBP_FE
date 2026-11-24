@@ -10,7 +10,7 @@ import { getSafeZoneScanPath } from '@/router/routes';
 import './ChatComposer.css';
 
 interface ChatComposerProps {
-  tradeId: string;
+  tradeId: string | null;
   disabled?: boolean;
   onSendText: (content: string) => Promise<unknown>;
   onSendImage: (file: File) => Promise<unknown>;
@@ -51,16 +51,18 @@ export default function ChatComposer({
 
   return (
     <div className="chat-composer">
-      <div className="chat-composer__actions">
-        <button
-          type="button"
-          className="chat-composer__safe-zone"
-          onClick={() => navigate(getSafeZoneScanPath(tradeId))}
-        >
-          <img src={safeZoneIcon} alt="" width={16} height={16} />
-          Safe Zone 기록하기
-        </button>
-      </div>
+      {tradeId && (
+        <div className="chat-composer__actions">
+          <button
+            type="button"
+            className="chat-composer__safe-zone"
+            onClick={() => navigate(getSafeZoneScanPath(tradeId))}
+          >
+            <img src={safeZoneIcon} alt="" width={16} height={16} />
+            Safe Zone 기록하기
+          </button>
+        </div>
+      )}
       {errorMessage && <p className="chat-composer__error">{errorMessage}</p>}
       <form className="chat-composer__form" onSubmit={handleSubmit}>
         <button
