@@ -1,5 +1,3 @@
-import { useAuthStore } from '@/store/authStore';
-
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export class ApiError extends Error {
@@ -19,7 +17,6 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
     credentials: 'include',
     headers: {
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      'X-User-Id': useAuthStore.getState().user?.id ?? '',
       ...init?.headers,
     },
   });
