@@ -69,7 +69,7 @@ export default function ChatRoomPage() {
             <button
               type="button"
               className="chat-room-page__report"
-              onClick={() => navigate(getReportPath(partner.id, room.tradeId))}
+              onClick={() => navigate(getReportPath(partner.id, room.tradeId ?? undefined))}
               aria-label="신고하기"
             >
               <img src={reportIcon} alt="" width={16} height={16} />

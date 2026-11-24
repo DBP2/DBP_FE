@@ -1,25 +1,21 @@
 import { ApiError } from '@/api/client';
-import { CHAT_ROOM_DETAILS_MOCK } from '@/mocks/chatRoomDetails';
-import { REPORT_TRADES_MOCK } from '@/mocks/reportTrades';
+import { REPORT_TRADES_MOCK, REPORT_USERS_MOCK } from '@/mocks/reportTrades';
 import type { ReportRequest, ReportTarget } from '@/types/report';
 
 export function getReportTarget(userId: string, tradeId: string | null): Promise<ReportTarget> {
-  const room = CHAT_ROOM_DETAILS_MOCK.find((item) => item.partner.id === userId);
-  if (!room) return Promise.reject(new ApiError(404, '신고 대상을 찾을 수 없어요'));
+  const name = REPORT_USERS_MOCK[userId];
+  if (!name) return Promise.reject(new ApiError(404, '신고 대상을 찾을 수 없어요'));
 
-  const tradeRoom = tradeId
-    ? CHAT_ROOM_DETAILS_MOCK.find((item) => item.tradeId === tradeId && item.partner.id === userId)
-    : undefined;
-  const record = tradeRoom ? REPORT_TRADES_MOCK[tradeRoom.tradeId] : undefined;
+  const record = tradeId ? REPORT_TRADES_MOCK[tradeId] : undefined;
 
   return Promise.resolve({
-    id: room.partner.id,
-    name: room.partner.name,
+    id: userId,
+    name,
     trade:
-      tradeRoom && record
+      tradeId && record && record.userId === userId
         ? {
-            id: tradeRoom.tradeId,
-            postTitle: tradeRoom.post.title,
+            id: tradeId,
+            postTitle: record.postTitle,
             requestedAt: record.requestedAt,
             photoCount: record.photoCount,
           }
