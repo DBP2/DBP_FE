@@ -1,0 +1,26 @@
+.signup-step__label {
+  color: var(--color-text-caption);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+.signup-step__count {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.signup-step__track {
+  height: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-gray-200);
+}
+
+.signup-step__bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3563e0 0%, #56d2ff 100%);
+  transition: width 0.3s;
+}
