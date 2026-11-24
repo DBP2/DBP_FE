@@ -41,3 +41,34 @@ export const router = createBrowserRouter([
     children: [{ path: ROUTES.SIGNUP_VERIFY, element: <SignupVerifyPage /> }],
   },
   {
+    element: <RequireAuth />,
+    children: [
+      {
+        element: <Layout />,
+        children: [
+          { path: ROUTES.HOME, element: <HomePage /> },
+          { path: ROUTES.TRADE, element: <TradePage /> },
+          { path: ROUTES.CHAT, element: <ChatPage /> },
+          { path: ROUTES.MY, element: <MyPage /> },
+        ],
+      },
+      {
+        element: <Layout showNavBar={false} />,
+        children: [
+          { path: ROUTES.SIGNUP_COMPLETE, element: <SignupCompletePage /> },
+          { path: ROUTES.CHAT_ROOM, element: <ChatRoomPage /> },
+          { path: ROUTES.SAFE_ZONE_SCAN, element: <SafeZoneScanPage /> },
+          { path: ROUTES.REPORT, element: <ReportPage /> },
+          { path: ROUTES.SAFE_ZONE_CODE, element: <SafeZoneCodePage /> },
+          { path: ROUTES.POST_SAFE_ZONE, element: <PostSafeZonePage /> },
+          { path: ROUTES.TRADE_DETAIL, element: <TradeDetailPage /> },
+          { path: ROUTES.TRADE_REVIEW, element: <TradeReviewPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    element: <Layout showNavBar={false} />,
+    children: [{ path: '*', element: <NotFoundPage /> }],
+  },
+]);
