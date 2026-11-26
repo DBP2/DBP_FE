@@ -6,7 +6,6 @@ import mascotImage from '@/assets/images/mascot.png';
 import messageIcon from '@/assets/images/message.svg';
 import qrIcon from '@/assets/images/qr_blue.svg';
 import Button from '@/components/common/Button/Button';
-import { SCHOOL_NAME } from '@/constants/school';
 import { ROUTES } from '@/router/routes';
 
 import './WelcomePage.css';
@@ -49,7 +48,7 @@ export default function WelcomePage() {
       </header>
 
       <div className="welcome-page__hero">
-        <span className="welcome-page__badge">{SCHOOL_NAME} 학생 전용</span>
+        <span className="welcome-page__badge">대학생 전용</span>
         <h1 className="welcome-page__title">
           우리 학교 학생만의
           <br />
