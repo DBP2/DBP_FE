@@ -1,0 +1,239 @@
+.trade-review-modal {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #f2f6ff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.trade-review-modal__header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.trade-review-modal__close-btn {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333333;
+}
+
+.trade-review-modal__content {
+  flex: 1;
+  padding: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.trade-review-modal__hero {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.trade-review-modal__icon-wrapper {
+  position: relative;
+  display: inline-block;
+  font-size: 64px;
+  margin-bottom: 12px;
+}
+
+.trade-review-modal__check {
+  position: absolute;
+  bottom: 0;
+  right: -4px;
+  width: 26px;
+  height: 26px;
+  background-color: #0ca678;
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trade-review-modal__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111111;
+  margin: 0 0 6px 0;
+}
+
+.trade-review-modal__sub {
+  font-size: 13px;
+  color: #666666;
+  margin: 0;
+}
+
+.trade-review-modal__info-card,
+.trade-review-modal__review-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.trade-review-modal__info-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+}
+
+.trade-review-modal__info-row .label {
+  color: #888888;
+}
+.trade-review-modal__info-row .value {
+  color: #222222;
+  font-weight: 600;
+}
+.trade-review-modal__info-row .value.highlight {
+  color: #0ca678;
+  font-weight: 700;
+}
+
+.trade-review-modal__review-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111111;
+  margin: 0 0 4px 0;
+}
+
+.trade-review-modal__review-sub {
+  font-size: 12px;
+  color: #888888;
+  margin: 0 0 16px 0;
+}
+
+/* 별점 영역 */
+.trade-review-modal__rating-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.trade-review-modal__stars {
+  display: flex;
+  gap: 8px;
+}
+
+.trade-review-modal__star-wrapper {
+  position: relative;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.star-half {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.star-half.left {
+  left: 0;
+}
+.star-half.right {
+  right: 0;
+}
+
+.star-icon {
+  user-select: none;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.star-icon.empty {
+  color: #e9ecef;
+}
+
+.star-icon.full {
+  color: #ffb703;
+}
+
+.star-icon.half {
+  background: linear-gradient(to right, #ffb703 50%, #e9ecef 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.trade-review-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trade-review-modal__tag-btn {
+  border: 1px solid #edf2ff;
+  background-color: #f8f9fa;
+  color: #495057;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trade-review-modal__tag-btn.active {
+  background-color: #3b5bdb;
+  color: #ffffff;
+  border-color: #3b5bdb;
+}
+
+.trade-review-modal__footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  padding: 12px 20px 24px 20px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.trade-review-modal__submit-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background-color: #3b5bdb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.trade-review-modal__skip-btn {
+  border: none;
+  background: none;
+  color: #868e96;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.trade-review-modal__submit-btn:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+}

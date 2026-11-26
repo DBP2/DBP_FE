@@ -8,3 +8,72 @@
   letter-spacing: -0.7px;
   color: var(--color-text);
 }
+
+.trade-page__filter {
+  display: flex;
+  background-color: #f1f3f5;
+  padding: 3px;
+  border-radius: 10px;
+  margin: 8px 0px;
+}
+
+.trade-page__tab {
+  flex: 1;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #868e96;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.trade-page__tab--active {
+  background-color: #ffffff;
+  color: #212529;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.trade-page__section {
+  padding-top: 16px;
+}
+
+.trade-page__section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #212529;
+  padding: 0 16px 8px 0px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trade-page__count {
+  font-size: 14px;
+  color: #1976d2;
+}
+
+.trade-page__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.trade-page__empty {
+  padding: 24px 16px;
+  font-size: 14px;
+  color: #868e96;
+  text-align: center;
+  margin: 0;
+}
+
+.trade-page__state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 14px;
+  color: #868e96;
+}

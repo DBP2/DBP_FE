@@ -7,6 +7,7 @@ export const ROUTES = {
   SIGNUP_COMPLETE: '/signup/complete',
   TRADE: '/trade',
   TRADE_DETAIL: '/trade/:tradeId',
+  TRADE_REVIEW: '/trade/:tradeId/review',
   SAFE_ZONE_SCAN: '/trade/:tradeId/scan',
   SAFE_ZONE_CODE: '/trade/:tradeId/scan/code',
   CHAT: '/chat',
@@ -26,3 +27,5 @@ export const getReportPath = (userId: string, tradeId?: string) =>
 export const getSafeZoneScanPath = (tradeId: string) => `/trade/${tradeId}/scan`;
 
 export const getSafeZoneCodePath = (tradeId: string) => `/trade/${tradeId}/scan/code`;
+
+export const getTradeReviewPath = (tradeId: string) => `/trade/${tradeId}/review`;
