@@ -6,6 +6,7 @@ export interface PostDraft {
   images: File[];
   title: string;
   category: string;
+  department: string;
   courseName: string;
   description: string;
   price: number;

@@ -40,7 +40,7 @@ export const mockPosts: MockPost[] = [
     sellerTradeCount: 23,
     description:
       '경제학원론 7판 교재입니다.\n필기 거의 없고 깨끗하게 사용했습니다.\n필요하신 분 편하게 연락 주세요!',
-    category: '교재 · 경제원론',
+    category: '전필 · 경제원론',
     condition: '상',
     availableTime: '평일 오후 2시 ~ 6시',
     tradeLocation: '중앙도서관 앞 Safe Zone',
@@ -62,7 +62,7 @@ export const mockPosts: MockPost[] = [
     sellerRating: 4.9,
     sellerTradeCount: 15,
     description: '회계원리 교재 세트 판매합니다.\n전체적으로 상태 좋고 필기 거의 없습니다.',
-    category: '교재 · 회계원리',
+    category: '전선 · 회계원리',
     condition: '상',
     availableTime: '평일 오후 1시 ~ 5시',
     tradeLocation: '학생회관 앞 Safe Zone',
