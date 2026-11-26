@@ -8,12 +8,14 @@ export const SCHOOL_EMAIL_DOMAINS = [
   'dongduk.ac.kr',
 ] as const;
 
-export type SchoolEmailDomain = (typeof SCHOOL_EMAIL_DOMAINS)[number];
+export const DEFAULT_SCHOOL_EMAIL_DOMAIN = 'dongduk.ac.kr';
 
-export const DEFAULT_SCHOOL_EMAIL_DOMAIN: SchoolEmailDomain = 'dongduk.ac.kr';
-
-export const isSchoolEmailDomain = (value: string): value is SchoolEmailDomain =>
+export const isPresetEmailDomain = (value: string) =>
   (SCHOOL_EMAIL_DOMAINS as readonly string[]).includes(value);
+
+export const SCHOOL_EMAIL_DOMAIN_PATTERN = /^[a-z0-9-]+(\.[a-z0-9-]+)*\.ac\.kr$/;
+
+export const isValidEmailDomain = (value: string) => SCHOOL_EMAIL_DOMAIN_PATTERN.test(value);
 
 export const DEPARTMENTS = [
   '국어국문학과',

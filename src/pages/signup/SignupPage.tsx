@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router';
 import { ApiError } from '@/api/client';
 import SignupStep from '@/components/auth/SignupStep/SignupStep';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
-import EmailDomainSelect from '@/components/auth/EmailDomainSelect/EmailDomainSelect';
+import EmailDomainField from '@/components/auth/EmailDomainField/EmailDomainField';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import SelectField from '@/components/common/SelectField/SelectField';
 import TextField from '@/components/common/TextField/TextField';
-import { DEFAULT_SCHOOL_EMAIL_DOMAIN, DEPARTMENTS, isSchoolEmailDomain } from '@/constants/school';
+import { DEFAULT_SCHOOL_EMAIL_DOMAIN, DEPARTMENTS } from '@/constants/school';
 import { useSendVerificationMail } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { useSignupStore } from '@/store/signupStore';
@@ -24,7 +24,7 @@ const toForm = (request: SignupRequest | null): SignupForm => {
   const [emailId = '', emailDomain = ''] = request?.email.split('@') ?? [];
   return {
     emailId,
-    emailDomain: isSchoolEmailDomain(emailDomain) ? emailDomain : DEFAULT_SCHOOL_EMAIL_DOMAIN,
+    emailDomain: emailDomain || DEFAULT_SCHOOL_EMAIL_DOMAIN,
     password: '',
     passwordConfirm: '',
     nickname: request?.nickname ?? '',
@@ -45,7 +45,9 @@ export default function SignupPage() {
   const isValid = Object.keys(errors).length === 0;
   const visibleError = (field: keyof SignupForm) => (touched[field] ? errors[field] : undefined);
   const emailError =
-    visibleError('emailId') ?? (error instanceof ApiError ? error.message : undefined);
+    visibleError('emailId') ??
+    visibleError('emailDomain') ??
+    (error instanceof ApiError ? error.message : undefined);
 
   const update = <K extends keyof SignupForm>(field: K, value: SignupForm[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -88,9 +90,10 @@ export default function SignupPage() {
               label="학교 이메일"
               required
               suffix={
-                <EmailDomainSelect
+                <EmailDomainField
                   value={form.emailDomain}
                   onChange={(domain) => update('emailDomain', domain)}
+                  onBlur={touch('emailDomain')}
                 />
               }
               placeholder="이메일 아이디"

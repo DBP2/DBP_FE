@@ -1,8 +1,8 @@
-import type { SchoolEmailDomain } from '@/constants/school';
+import { isValidEmailDomain } from '@/constants/school';
 
 export interface SignupForm {
   emailId: string;
-  emailDomain: SchoolEmailDomain;
+  emailDomain: string;
   password: string;
   passwordConfirm: string;
   nickname: string;
@@ -20,6 +20,11 @@ export function validateSignup(form: SignupForm): SignupErrors {
 
   if (!form.emailId) errors.emailId = '학교 이메일을 입력해 주세요';
   else if (!EMAIL_ID_PATTERN.test(form.emailId)) errors.emailId = '이메일 형식을 확인해 주세요';
+
+  if (!form.emailDomain) errors.emailDomain = '학교 이메일 도메인을 입력해 주세요';
+  else if (!isValidEmailDomain(form.emailDomain)) {
+    errors.emailDomain = '학교 도메인(ac.kr) 형식을 확인해 주세요';
+  }
 
   if (form.password.length < 8 || !/[A-Za-z]/.test(form.password) || !/\d/.test(form.password)) {
     errors.password = '영문·숫자 포함 8자 이상으로 입력해 주세요';

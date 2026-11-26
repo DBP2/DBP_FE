@@ -5,12 +5,12 @@ import { ApiError } from '@/api/client';
 import appIcon from '@/assets/images/app_icon.png';
 import AuthNotice from '@/components/auth/AuthNotice/AuthNotice';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
-import EmailDomainSelect from '@/components/auth/EmailDomainSelect/EmailDomainSelect';
+import EmailDomainField from '@/components/auth/EmailDomainField/EmailDomainField';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import TextField from '@/components/common/TextField/TextField';
-import { DEFAULT_SCHOOL_EMAIL_DOMAIN, type SchoolEmailDomain } from '@/constants/school';
+import { DEFAULT_SCHOOL_EMAIL_DOMAIN, isValidEmailDomain } from '@/constants/school';
 import { useLogin } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
@@ -23,12 +23,13 @@ export default function LoginPage() {
   const saveLogin = useAuthStore((state) => state.login);
   const { mutate, isPending, error, reset } = useLogin();
   const [emailId, setEmailId] = useState('');
-  const [emailDomain, setEmailDomain] = useState<SchoolEmailDomain>(DEFAULT_SCHOOL_EMAIL_DOMAIN);
+  const [emailDomain, setEmailDomain] = useState(DEFAULT_SCHOOL_EMAIL_DOMAIN);
   const [password, setPassword] = useState('');
   const [keepLogin, setKeepLogin] = useState(false);
 
   const redirectTo = (location.state as { from?: string } | null)?.from ?? ROUTES.HOME;
-  const canSubmit = emailId.trim() !== '' && password !== '' && !isPending;
+  const canSubmit =
+    emailId.trim() !== '' && isValidEmailDomain(emailDomain) && password !== '' && !isPending;
   const loginError = error
     ? error instanceof ApiError
       ? error.message
@@ -66,7 +67,7 @@ export default function LoginPage() {
             <TextField
               label="학교 이메일"
               suffix={
-                <EmailDomainSelect
+                <EmailDomainField
                   value={emailDomain}
                   onChange={(domain) => {
                     setEmailDomain(domain);
