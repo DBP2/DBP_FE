@@ -1,6 +1,21 @@
 export const SCHOOL_NAME = '동덕여대';
 
-export const SCHOOL_EMAIL_DOMAIN = 'dongduk.ac.kr';
+export const SCHOOL_EMAIL_DOMAINS = [
+  'snu.ac.kr',
+  'korea.ac.kr',
+  'hanyang.ac.kr',
+  'kookmin.ac.kr',
+  'dongduk.ac.kr',
+] as const;
+
+export const DEFAULT_SCHOOL_EMAIL_DOMAIN = 'dongduk.ac.kr';
+
+export const isPresetEmailDomain = (value: string) =>
+  (SCHOOL_EMAIL_DOMAINS as readonly string[]).includes(value);
+
+export const SCHOOL_EMAIL_DOMAIN_PATTERN = /^[a-z0-9-]+(\.[a-z0-9-]+)*\.ac\.kr$/;
+
+export const isValidEmailDomain = (value: string) => SCHOOL_EMAIL_DOMAIN_PATTERN.test(value);
 
 export const DEPARTMENTS = [
   '국어국문학과',

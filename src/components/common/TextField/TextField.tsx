@@ -1,4 +1,4 @@
-import { useId, type InputHTMLAttributes } from 'react';
+import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
 
 import FormField from '@/components/common/FormField/FormField';
 import { cn } from '@/utils/cn';
@@ -7,7 +7,7 @@ import './TextField.css';
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  suffix?: string;
+  suffix?: ReactNode;
   hint?: string;
   error?: string;
 }
