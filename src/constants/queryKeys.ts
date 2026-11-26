@@ -8,4 +8,5 @@ export const QUERY_KEYS = {
   posts: ['posts'] as const,
   tradeRecordInfo: (tradeId: string) => ['tradeRecordInfo', tradeId] as const,
   myTradeRecord: (tradeId: string) => ['myTradeRecord', tradeId] as const,
+  myProfile: ['myProfile'] as const,
 };
