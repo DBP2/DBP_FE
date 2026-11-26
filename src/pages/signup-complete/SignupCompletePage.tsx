@@ -6,7 +6,6 @@ import mascotImage from '@/assets/images/mascot_cheer.png';
 import verifiedIcon from '@/assets/images/shield_icon.svg';
 import Avatar from '@/components/common/Avatar/Avatar';
 import Button from '@/components/common/Button/Button';
-import { SCHOOL_NAME } from '@/constants/school';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
 import { useSignupStore } from '@/store/signupStore';
@@ -42,7 +41,7 @@ export default function SignupCompletePage() {
       </span>
       <h1 className="signup-complete-page__title">환영해요, {user.nickname} 님!</h1>
       <p className="signup-complete-page__description">
-        이제 {SCHOOL_NAME} 학우들과
+        이제 학우들과
         <br />
         안심하고 거래할 수 있어요.
       </p>
