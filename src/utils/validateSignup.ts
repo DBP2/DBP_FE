@@ -1,5 +1,8 @@
+import type { SchoolEmailDomain } from '@/constants/school';
+
 export interface SignupForm {
   emailId: string;
+  emailDomain: SchoolEmailDomain;
   password: string;
   passwordConfirm: string;
   nickname: string;

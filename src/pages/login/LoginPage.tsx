@@ -5,11 +5,12 @@ import { ApiError } from '@/api/client';
 import appIcon from '@/assets/images/app_icon.png';
 import AuthNotice from '@/components/auth/AuthNotice/AuthNotice';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
+import EmailDomainSelect from '@/components/auth/EmailDomainSelect/EmailDomainSelect';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import TextField from '@/components/common/TextField/TextField';
-import { SCHOOL_EMAIL_DOMAIN } from '@/constants/school';
+import { DEFAULT_SCHOOL_EMAIL_DOMAIN, type SchoolEmailDomain } from '@/constants/school';
 import { useLogin } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const saveLogin = useAuthStore((state) => state.login);
   const { mutate, isPending, error, reset } = useLogin();
   const [emailId, setEmailId] = useState('');
+  const [emailDomain, setEmailDomain] = useState<SchoolEmailDomain>(DEFAULT_SCHOOL_EMAIL_DOMAIN);
   const [password, setPassword] = useState('');
   const [keepLogin, setKeepLogin] = useState(false);
 
@@ -37,7 +39,7 @@ export default function LoginPage() {
     event.preventDefault();
     if (!canSubmit) return;
     mutate(
-      { email: `${emailId.trim()}@${SCHOOL_EMAIL_DOMAIN}`, password },
+      { email: `${emailId.trim()}@${emailDomain}`, password },
       {
         onSuccess: (user) => {
           navigate(redirectTo, { replace: true });
@@ -63,7 +65,15 @@ export default function LoginPage() {
           <div className="login-page__fields">
             <TextField
               label="학교 이메일"
-              suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
+              suffix={
+                <EmailDomainSelect
+                  value={emailDomain}
+                  onChange={(domain) => {
+                    setEmailDomain(domain);
+                    reset();
+                  }}
+                />
+              }
               placeholder="이메일 아이디"
               value={emailId}
               onChange={(event) => {

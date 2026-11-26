@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router';
 import { ApiError } from '@/api/client';
 import SignupStep from '@/components/auth/SignupStep/SignupStep';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
+import EmailDomainSelect from '@/components/auth/EmailDomainSelect/EmailDomainSelect';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import SelectField from '@/components/common/SelectField/SelectField';
 import TextField from '@/components/common/TextField/TextField';
-import { DEPARTMENTS, SCHOOL_EMAIL_DOMAIN } from '@/constants/school';
+import { DEFAULT_SCHOOL_EMAIL_DOMAIN, DEPARTMENTS, isSchoolEmailDomain } from '@/constants/school';
 import { useSendVerificationMail } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { useSignupStore } from '@/store/signupStore';
@@ -19,14 +20,18 @@ import { validateSignup, type SignupForm } from '@/utils/validateSignup';
 import './SignupPage.css';
 
 // 인증 단계에서 뒤로 돌아오면 입력했던 정보를 다시 채움 (비밀번호·약관 동의는 다시 입력)
-const toForm = (request: SignupRequest | null): SignupForm => ({
-  emailId: request?.email.split('@')[0] ?? '',
-  password: '',
-  passwordConfirm: '',
-  nickname: request?.nickname ?? '',
-  department: request?.department ?? '',
-  agreed: false,
-});
+const toForm = (request: SignupRequest | null): SignupForm => {
+  const [emailId = '', emailDomain = ''] = request?.email.split('@') ?? [];
+  return {
+    emailId,
+    emailDomain: isSchoolEmailDomain(emailDomain) ? emailDomain : DEFAULT_SCHOOL_EMAIL_DOMAIN,
+    password: '',
+    passwordConfirm: '',
+    nickname: request?.nickname ?? '',
+    department: request?.department ?? '',
+    agreed: false,
+  };
+};
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -44,7 +49,7 @@ export default function SignupPage() {
 
   const update = <K extends keyof SignupForm>(field: K, value: SignupForm[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-    if (field === 'emailId') reset();
+    if (field === 'emailId' || field === 'emailDomain') reset();
   };
   const touch = (field: keyof SignupForm) => () =>
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -54,7 +59,7 @@ export default function SignupPage() {
     if (!isValid || isPending) return;
 
     const request: SignupRequest = {
-      email: `${form.emailId}@${SCHOOL_EMAIL_DOMAIN}`,
+      email: `${form.emailId}@${form.emailDomain}`,
       password: form.password,
       nickname: form.nickname.trim(),
       department: form.department || null,
@@ -82,7 +87,12 @@ export default function SignupPage() {
             <TextField
               label="학교 이메일"
               required
-              suffix={`@${SCHOOL_EMAIL_DOMAIN}`}
+              suffix={
+                <EmailDomainSelect
+                  value={form.emailDomain}
+                  onChange={(domain) => update('emailDomain', domain)}
+                />
+              }
               placeholder="이메일 아이디"
               value={form.emailId}
               onChange={(event) => update('emailId', event.target.value.trim())}
