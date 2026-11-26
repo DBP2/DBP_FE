@@ -1,5 +1,3 @@
-export const SCHOOL_NAME = '동덕여대';
-
 export const SCHOOL_EMAIL_DOMAINS = [
   'snu.ac.kr',
   'korea.ac.kr',
