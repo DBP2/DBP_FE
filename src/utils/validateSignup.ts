@@ -1,29 +1,35 @@
-import { isValidEmailDomain } from '@/constants/school';
+import { CUSTOM_SCHOOL_OPTION } from '@/constants/school';
 
 export interface SignupForm {
-  emailId: string;
-  emailDomain: string;
+  schoolName: string;
+  customSchoolName: string;
+  studentNo: string;
+  studentName: string;
+  userId: string;
   password: string;
   passwordConfirm: string;
   nickname: string;
-  department: string;
   agreed: boolean;
 }
 
 export type SignupErrors = Partial<Record<keyof SignupForm, string>>;
 
-export const EMAIL_ID_PATTERN = /^[A-Za-z0-9._-]+$/;
+export const USER_ID_PATTERN = /^[a-z0-9_]{4,20}$/;
 
 export function validateSignup(form: SignupForm): SignupErrors {
   const errors: SignupErrors = {};
   const nickname = form.nickname.trim();
 
-  if (!form.emailId) errors.emailId = '학교 이메일을 입력해 주세요';
-  else if (!EMAIL_ID_PATTERN.test(form.emailId)) errors.emailId = '이메일 형식을 확인해 주세요';
+  if (!form.schoolName) errors.schoolName = '학교를 선택해 주세요';
+  else if (form.schoolName === CUSTOM_SCHOOL_OPTION && !form.customSchoolName.trim()) {
+    errors.customSchoolName = '학교 이름을 입력해 주세요';
+  }
+  if (!form.studentNo.trim()) errors.studentNo = '학번을 입력해 주세요';
+  if (!form.studentName.trim()) errors.studentName = '이름을 입력해 주세요';
 
-  if (!form.emailDomain) errors.emailDomain = '학교 이메일 도메인을 입력해 주세요';
-  else if (!isValidEmailDomain(form.emailDomain)) {
-    errors.emailDomain = '학교 도메인(ac.kr) 형식을 확인해 주세요';
+  if (!form.userId) errors.userId = '아이디를 입력해 주세요';
+  else if (!USER_ID_PATTERN.test(form.userId)) {
+    errors.userId = '영어 소문자·숫자·_ 4~20자로 입력해 주세요';
   }
 
   if (form.password.length < 8 || !/[A-Za-z]/.test(form.password) || !/\d/.test(form.password)) {

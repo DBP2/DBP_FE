@@ -2,56 +2,61 @@ import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 
 import { ApiError } from '@/api/client';
-import SignupStep from '@/components/auth/SignupStep/SignupStep';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
-import EmailDomainField from '@/components/auth/EmailDomainField/EmailDomainField';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import SelectField from '@/components/common/SelectField/SelectField';
 import TextField from '@/components/common/TextField/TextField';
-import { DEFAULT_SCHOOL_EMAIL_DOMAIN, DEPARTMENTS } from '@/constants/school';
-import { useSendVerificationMail } from '@/hooks/useAuth';
+import { CUSTOM_SCHOOL_OPTION, normalizeSchoolName, SCHOOL_OPTIONS } from '@/constants/school';
+import { useSchools, useSignup } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
-import { useSignupStore } from '@/store/signupStore';
-import type { SignupRequest } from '@/types/auth';
 import { validateSignup, type SignupForm } from '@/utils/validateSignup';
 
 import './SignupPage.css';
 
-// 인증 단계에서 뒤로 돌아오면 입력했던 정보를 다시 채움 (비밀번호·약관 동의는 다시 입력)
-const toForm = (request: SignupRequest | null): SignupForm => {
-  const [emailId = '', emailDomain = ''] = request?.email.split('@') ?? [];
-  return {
-    emailId,
-    emailDomain: emailDomain || DEFAULT_SCHOOL_EMAIL_DOMAIN,
-    password: '',
-    passwordConfirm: '',
-    nickname: request?.nickname ?? '',
-    department: request?.department ?? '',
-    agreed: false,
-  };
+const EMPTY_FORM: SignupForm = {
+  schoolName: '',
+  customSchoolName: '',
+  studentNo: '',
+  studentName: '',
+  userId: '',
+  password: '',
+  passwordConfirm: '',
+  nickname: '',
+  agreed: false,
 };
+
+const SCHOOL_NOT_FOUND_MESSAGE = '아직 가입할 수 없는 학교예요';
+
+const serverErrorField = (message: string): keyof SignupForm =>
+  message.includes('아이디') ? 'userId' : message.includes('닉네임') ? 'nickname' : 'studentNo';
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const savedRequest = useSignupStore((state) => state.request);
-  const startVerification = useSignupStore((state) => state.startVerification);
-  const { mutate, isPending, error, reset } = useSendVerificationMail();
-  const [form, setForm] = useState<SignupForm>(() => toForm(savedRequest));
+  const { data: schools = [], isError: schoolsFailed } = useSchools();
+  const { mutate, isPending, error, reset } = useSignup();
+  const [form, setForm] = useState<SignupForm>(EMPTY_FORM);
   const [touched, setTouched] = useState<Partial<Record<keyof SignupForm, boolean>>>({});
+  const [schoolNotFound, setSchoolNotFound] = useState(false);
+
+  const isCustomSchool = form.schoolName === CUSTOM_SCHOOL_OPTION;
 
   const errors = validateSignup(form);
   const isValid = Object.keys(errors).length === 0;
-  const visibleError = (field: keyof SignupForm) => (touched[field] ? errors[field] : undefined);
-  const emailError =
-    visibleError('emailId') ??
-    visibleError('emailDomain') ??
-    (error instanceof ApiError ? error.message : undefined);
+  const serverError = error
+    ? error instanceof ApiError
+      ? { field: serverErrorField(error.message), message: error.message }
+      : { field: 'studentNo' as const, message: '가입하지 못했어요. 잠시 후 다시 시도해 주세요' }
+    : null;
+  const visibleError = (field: keyof SignupForm) =>
+    (touched[field] ? errors[field] : undefined) ??
+    (serverError?.field === field ? serverError.message : undefined);
 
   const update = <K extends keyof SignupForm>(field: K, value: SignupForm[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-    if (field === 'emailId' || field === 'emailDomain') reset();
+    setSchoolNotFound(false);
+    reset();
   };
   const touch = (field: keyof SignupForm) => () =>
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -60,18 +65,28 @@ export default function SignupPage() {
     event.preventDefault();
     if (!isValid || isPending) return;
 
-    const request: SignupRequest = {
-      email: `${form.emailId}@${form.emailDomain}`,
-      password: form.password,
-      nickname: form.nickname.trim(),
-      department: form.department || null,
-    };
-    mutate(request, {
-      onSuccess: (verification) => {
-        startVerification(request, verification);
-        navigate(ROUTES.SIGNUP_VERIFY);
+    const schoolName = normalizeSchoolName(
+      isCustomSchool ? form.customSchoolName : form.schoolName,
+    );
+    const school = schools.find((item) => normalizeSchoolName(item.name) === schoolName);
+    if (!school) {
+      setSchoolNotFound(true);
+      return;
+    }
+
+    mutate(
+      {
+        schoolId: school.id,
+        studentNo: form.studentNo.trim(),
+        studentName: form.studentName.trim(),
+        userId: form.userId,
+        password: form.password,
+        nickname: form.nickname.trim(),
       },
-    });
+      {
+        onSuccess: (user) => navigate(ROUTES.SIGNUP_COMPLETE, { replace: true, state: { user } }),
+      },
+    );
   };
 
   return (
@@ -79,28 +94,74 @@ export default function SignupPage() {
       <PageHeader title="회원가입" onBack={() => navigate(ROUTES.WELCOME)} />
       <form className="signup-page__form" onSubmit={handleSubmit} noValidate>
         <div className="signup-page__body">
-          <SignupStep current={1} total={2} label="가입 정보" />
           <h1 className="signup-page__title">가입 정보를 입력해 주세요</h1>
           <p className="signup-page__description">
-            학교 이메일로 인증된 계정만 거래 기능을 이용할 수 있어요.
+            학교·학번·이름으로 재학 중인 학생인지 확인한 뒤 가입돼요.
           </p>
 
           <div className="signup-page__fields">
-            <TextField
-              label="학교 이메일"
+            <SelectField
+              label="학교"
               required
-              suffix={
-                <EmailDomainField
-                  value={form.emailDomain}
-                  onChange={(domain) => update('emailDomain', domain)}
-                  onBlur={touch('emailDomain')}
-                />
+              placeholder="학교를 선택해 주세요"
+              options={[...SCHOOL_OPTIONS, CUSTOM_SCHOOL_OPTION]}
+              value={form.schoolName}
+              onChange={(event) => update('schoolName', event.target.value)}
+              onBlur={touch('schoolName')}
+              error={
+                schoolsFailed
+                  ? '학교 목록을 불러오지 못했어요'
+                  : (visibleError('schoolName') ??
+                    (schoolNotFound && !isCustomSchool ? SCHOOL_NOT_FOUND_MESSAGE : undefined))
               }
-              placeholder="이메일 아이디"
-              value={form.emailId}
-              onChange={(event) => update('emailId', event.target.value.trim())}
-              onBlur={touch('emailId')}
-              error={emailError}
+            />
+            {isCustomSchool && (
+              <TextField
+                label="학교 이름"
+                required
+                placeholder="예) 이화여자대학교"
+                value={form.customSchoolName}
+                onChange={(event) => update('customSchoolName', event.target.value)}
+                onBlur={touch('customSchoolName')}
+                error={
+                  visibleError('customSchoolName') ??
+                  (schoolNotFound ? SCHOOL_NOT_FOUND_MESSAGE : undefined)
+                }
+                autoComplete="organization"
+                autoFocus
+              />
+            )}
+            <div className="signup-page__row">
+              <TextField
+                label="학번"
+                required
+                placeholder="학번"
+                value={form.studentNo}
+                onChange={(event) => update('studentNo', event.target.value)}
+                onBlur={touch('studentNo')}
+                error={visibleError('studentNo')}
+                autoComplete="off"
+              />
+              <TextField
+                label="이름"
+                required
+                placeholder="실명"
+                value={form.studentName}
+                onChange={(event) => update('studentName', event.target.value)}
+                onBlur={touch('studentName')}
+                error={visibleError('studentName')}
+                autoComplete="name"
+              />
+            </div>
+            <TextField
+              label="아이디"
+              required
+              placeholder="영어 소문자·숫자·_ 4~20자"
+              maxLength={20}
+              value={form.userId}
+              onChange={(event) => update('userId', event.target.value.trim())}
+              onBlur={touch('userId')}
+              error={visibleError('userId')}
               autoComplete="username"
               autoCapitalize="off"
             />
@@ -127,26 +188,18 @@ export default function SignupPage() {
               error={visibleError('passwordConfirm')}
               autoComplete="new-password"
             />
-            <div className="signup-page__row">
-              <TextField
-                label="닉네임"
-                required
-                placeholder="2~10자"
-                maxLength={10}
-                value={form.nickname}
-                onChange={(event) => update('nickname', event.target.value)}
-                onBlur={touch('nickname')}
-                error={visibleError('nickname')}
-                autoComplete="nickname"
-              />
-              <SelectField
-                label="학과"
-                placeholder="선택"
-                options={DEPARTMENTS}
-                value={form.department}
-                onChange={(event) => update('department', event.target.value)}
-              />
-            </div>
+            <TextField
+              label="닉네임"
+              required
+              placeholder="2~10자"
+              maxLength={10}
+              value={form.nickname}
+              onChange={(event) => update('nickname', event.target.value)}
+              onBlur={touch('nickname')}
+              hint="채팅·게시글에서 다른 학우에게 보이는 이름이에요"
+              error={visibleError('nickname')}
+              autoComplete="nickname"
+            />
           </div>
 
           <Checkbox
@@ -160,7 +213,7 @@ export default function SignupPage() {
         </div>
         <BottomBar>
           <Button type="submit" fullWidth disabled={!isValid || isPending}>
-            인증 메일 받기
+            가입하기
           </Button>
         </BottomBar>
       </form>

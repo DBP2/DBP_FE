@@ -13,7 +13,6 @@ import SafeZoneCodePage from '@/pages/safe-zone-code/SafeZoneCodePage';
 import SafeZoneScanPage from '@/pages/safe-zone-scan/SafeZoneScanPage';
 import SignupPage from '@/pages/signup/SignupPage';
 import SignupCompletePage from '@/pages/signup-complete/SignupCompletePage';
-import SignupVerifyPage from '@/pages/signup-verify/SignupVerifyPage';
 import TradePage from '@/pages/trade/TradePage';
 import WelcomePage from '@/pages/welcome/WelcomePage';
 import { GuestOnly, RequireAuth } from '@/router/AuthGuard';
@@ -34,9 +33,8 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    // 인증 완료 직후 로그인 상태가 되므로 GuestOnly 밖에 둠 (가입 정보가 없으면 페이지에서 되돌림)
     element: <Layout showNavBar={false} />,
-    children: [{ path: ROUTES.SIGNUP_VERIFY, element: <SignupVerifyPage /> }],
+    children: [{ path: ROUTES.SIGNUP_COMPLETE, element: <SignupCompletePage /> }],
   },
   {
     element: <RequireAuth />,
@@ -53,7 +51,6 @@ export const router = createBrowserRouter([
       {
         element: <Layout showNavBar={false} />,
         children: [
-          { path: ROUTES.SIGNUP_COMPLETE, element: <SignupCompletePage /> },
           { path: ROUTES.CHAT_ROOM, element: <ChatRoomPage /> },
           { path: ROUTES.SAFE_ZONE_SCAN, element: <SafeZoneScanPage /> },
           { path: ROUTES.REPORT, element: <ReportPage /> },
