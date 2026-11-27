@@ -1,7 +1,8 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router';
 
 import alertIcon from '@/assets/images/alert_orange.svg';
+import addPhotoIcon from '@/assets/images/camera.svg';
 import cameraIcon from '@/assets/images/camera_green.svg';
 import Avatar from '@/components/common/Avatar/Avatar';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
@@ -10,7 +11,9 @@ import ErrorState from '@/components/common/ErrorState/ErrorState';
 import OptionCard from '@/components/common/OptionCard/OptionCard';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import TextArea from '@/components/common/TextArea/TextArea';
+import RecordPhoto from '@/components/trade-record/RecordPhoto/RecordPhoto';
 import {
+  REPORT_PHOTO_MAX_COUNT,
   REPORT_REASON_MAX_LENGTH,
   REPORT_REASON_MIN_LENGTH,
   REPORT_TYPE_OPTIONS,
@@ -21,6 +24,12 @@ import type { ReportType } from '@/types/report';
 import { cn } from '@/utils/cn';
 
 import './ReportPage.css';
+
+interface ReportPhoto {
+  id: string;
+  file: File;
+  previewUrl: string;
+}
 
 const formatMonthDay = (value: string) => {
   const date = new Date(value);
@@ -39,6 +48,18 @@ export default function ReportPage() {
   const [type, setType] = useState<ReportType | null>(null);
   const [reason, setReason] = useState('');
   const [isReasonTouched, setIsReasonTouched] = useState(false);
+  const [photos, setPhotos] = useState<ReportPhoto[]>([]);
+  const photosRef = useRef(photos);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    photosRef.current = photos;
+  }, [photos]);
+
+  useEffect(
+    () => () => photosRef.current.forEach((photo) => URL.revokeObjectURL(photo.previewUrl)),
+    [],
+  );
 
   const selectedOption = REPORT_TYPE_OPTIONS.find((option) => option.value === type);
   const isReasonValid = reason.trim().length >= REPORT_REASON_MIN_LENGTH;
@@ -51,6 +72,25 @@ export default function ReportPage() {
     } else {
       navigate(-1);
     }
+  };
+
+  const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = '';
+    const added = files.slice(0, REPORT_PHOTO_MAX_COUNT - photos.length).map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+      previewUrl: URL.createObjectURL(file),
+    }));
+    if (added.length > 0) setPhotos((prev) => [...prev, ...added]);
+  };
+
+  const removePhoto = (id: string) => {
+    setPhotos((prev) => {
+      const target = prev.find((photo) => photo.id === id);
+      if (target) URL.revokeObjectURL(target.previewUrl);
+      return prev.filter((photo) => photo.id !== id);
+    });
   };
 
   if (isError) {
@@ -85,7 +125,13 @@ export default function ReportPage() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!canSubmit || type === null) return;
-    mutate({ targetId: target.id, tradeId: trade?.id ?? null, type, reason: reason.trim() });
+    mutate({
+      targetId: target.id,
+      tradeId: trade?.id ?? null,
+      type,
+      reason: reason.trim(),
+      photos: photos.map((photo) => photo.file),
+    });
   };
 
   return (
@@ -147,6 +193,46 @@ export default function ReportPage() {
             {isReasonTouched && !isReasonValid && (
               <p className="report-page__error">{REPORT_REASON_MIN_LENGTH}자 이상 적어 주세요</p>
             )}
+          </div>
+
+          <div className="report-page__photos-field">
+            <div className="report-page__photos-header">
+              <p className="report-page__label">
+                사진 첨부 <span className="report-page__optional">(선택)</span>
+              </p>
+              <span className="report-page__photos-count">
+                {photos.length}/{REPORT_PHOTO_MAX_COUNT}
+              </span>
+            </div>
+            <div className="report-page__photos">
+              {photos.map((photo, index) => (
+                <RecordPhoto
+                  key={photo.id}
+                  src={photo.previewUrl}
+                  alt={`첨부 사진 ${index + 1}`}
+                  onRemove={() => removePhoto(photo.id)}
+                />
+              ))}
+              {photos.length < REPORT_PHOTO_MAX_COUNT && (
+                <button
+                  type="button"
+                  className="report-page__photo-add"
+                  onClick={() => photoInputRef.current?.click()}
+                >
+                  <img src={addPhotoIcon} alt="" width={24} height={24} />
+                  사진 추가
+                </button>
+              )}
+              <input
+                ref={photoInputRef}
+                className="report-page__photo-input"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handlePhotoChange}
+              />
+            </div>
+            <p className="report-page__hint">대화 캡처나 물품 사진을 올리면 검토에 도움이 돼요</p>
           </div>
 
           {trade && trade.photoCount > 0 && (
