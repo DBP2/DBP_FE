@@ -18,4 +18,5 @@ export interface ReportRequest {
   tradeId: string | null;
   type: ReportType;
   reason: string;
+  photos: File[];
 }

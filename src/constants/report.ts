@@ -4,6 +4,8 @@ export const REPORT_REASON_MIN_LENGTH = 10;
 
 export const REPORT_REASON_MAX_LENGTH = 500;
 
+export const REPORT_PHOTO_MAX_COUNT = 5;
+
 export interface ReportTypeOption {
   value: ReportType;
   label: string;
