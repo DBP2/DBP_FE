@@ -5,12 +5,10 @@ import { ApiError } from '@/api/client';
 import appIcon from '@/assets/images/app_icon.png';
 import AuthNotice from '@/components/auth/AuthNotice/AuthNotice';
 import BottomBar from '@/components/common/BottomBar/BottomBar';
-import EmailDomainField from '@/components/auth/EmailDomainField/EmailDomainField';
 import Button from '@/components/common/Button/Button';
 import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import TextField from '@/components/common/TextField/TextField';
-import { DEFAULT_SCHOOL_EMAIL_DOMAIN, isValidEmailDomain } from '@/constants/school';
 import { useLogin } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
@@ -22,14 +20,12 @@ export default function LoginPage() {
   const location = useLocation();
   const saveLogin = useAuthStore((state) => state.login);
   const { mutate, isPending, error, reset } = useLogin();
-  const [emailId, setEmailId] = useState('');
-  const [emailDomain, setEmailDomain] = useState(DEFAULT_SCHOOL_EMAIL_DOMAIN);
+  const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [keepLogin, setKeepLogin] = useState(false);
 
   const redirectTo = (location.state as { from?: string } | null)?.from ?? ROUTES.HOME;
-  const canSubmit =
-    emailId.trim() !== '' && isValidEmailDomain(emailDomain) && password !== '' && !isPending;
+  const canSubmit = userId.trim() !== '' && password !== '' && !isPending;
   const loginError = error
     ? error instanceof ApiError
       ? error.message
@@ -40,7 +36,7 @@ export default function LoginPage() {
     event.preventDefault();
     if (!canSubmit) return;
     mutate(
-      { email: `${emailId.trim()}@${emailDomain}`, password },
+      { userId: userId.trim(), password },
       {
         onSuccess: (user) => {
           navigate(redirectTo, { replace: true });
@@ -58,27 +54,18 @@ export default function LoginPage() {
           <img className="login-page__icon" src={appIcon} alt="" width={56} height={56} />
           <h1 className="login-page__title">다시 만나서 반가워요!</h1>
           <p className="login-page__description">
-            학교 이메일로 로그인하고
+            아이디로 로그인하고
             <br />
             학우들의 교재와 물품을 둘러보세요.
           </p>
 
           <div className="login-page__fields">
             <TextField
-              label="학교 이메일"
-              suffix={
-                <EmailDomainField
-                  value={emailDomain}
-                  onChange={(domain) => {
-                    setEmailDomain(domain);
-                    reset();
-                  }}
-                />
-              }
-              placeholder="이메일 아이디"
-              value={emailId}
+              label="아이디"
+              placeholder="아이디를 입력해 주세요"
+              value={userId}
               onChange={(event) => {
-                setEmailId(event.target.value);
+                setUserId(event.target.value);
                 reset();
               }}
               autoComplete="username"
@@ -107,7 +94,7 @@ export default function LoginPage() {
           </Checkbox>
 
           <AuthNotice className="login-page__notice">
-            학교 이메일 인증을 마친 계정만 로그인할 수 있어요.
+            학적 확인을 마치고 가입한 계정만 로그인할 수 있어요.
           </AuthNotice>
         </div>
         <BottomBar>

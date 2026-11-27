@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 
 import checkIcon from '@/assets/images/check_white.svg';
 import mascotImage from '@/assets/images/mascot_cheer.png';
@@ -8,18 +8,21 @@ import Avatar from '@/components/common/Avatar/Avatar';
 import Button from '@/components/common/Button/Button';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
-import { useSignupStore } from '@/store/signupStore';
+import type { AuthUser } from '@/types/auth';
 
 import './SignupCompletePage.css';
 
 export default function SignupCompletePage() {
   const navigate = useNavigate();
-  const user = useAuthStore((state) => state.user);
-  const resetSignup = useSignupStore((state) => state.reset);
+  const location = useLocation();
+  const savedUser = useAuthStore((state) => state.user);
+  const saveLogin = useAuthStore((state) => state.login);
+  const signedUpUser = (location.state as { user?: AuthUser } | null)?.user;
+  const user = savedUser ?? signedUpUser;
 
   useEffect(() => {
-    resetSignup();
-  }, [resetSignup]);
+    if (signedUpUser && !savedUser) saveLogin(signedUpUser, false);
+  }, [signedUpUser, savedUser, saveLogin]);
 
   if (!user) return <Navigate to={ROUTES.WELCOME} replace />;
 
@@ -39,7 +42,7 @@ export default function SignupCompletePage() {
         <img src={checkIcon} alt="" width={14} height={14} />
         인증 완료
       </span>
-      <h1 className="signup-complete-page__title">환영해요, {user.nickname} 님!</h1>
+      <h1 className="signup-complete-page__title">환영해요, {user.name} 님!</h1>
       <p className="signup-complete-page__description">
         이제 학우들과
         <br />
@@ -47,17 +50,17 @@ export default function SignupCompletePage() {
       </p>
 
       <div className="signup-complete-page__profile">
-        <Avatar name={user.nickname} seed={user.id} size={44} />
+        <Avatar name={user.name} seed={user.id} size={44} />
         <div className="signup-complete-page__profile-info">
           <p className="signup-complete-page__name">
-            {user.nickname}
+            {user.name}
             <span className="signup-complete-page__verified">
               <img src={verifiedIcon} alt="" width={14} height={14} />
               학교인증
             </span>
           </p>
           <p className="signup-complete-page__meta">
-            {[user.email, user.department].filter(Boolean).join(' · ')}
+            {[user.schoolName, user.id].filter(Boolean).join(' · ')}
           </p>
         </div>
       </div>

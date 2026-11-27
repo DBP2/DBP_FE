@@ -13,6 +13,7 @@ import starIcon from '@/assets/images/star.svg';
 import swapIcon from '@/assets/images/swap.svg';
 import ErrorState from '@/components/common/ErrorState/ErrorState';
 import Tag from '@/components/common/Tag/Tag';
+import { useLogout } from '@/hooks/useAuth';
 import { useMyProfile } from '@/hooks/useMyProfile';
 import { ROUTES } from '@/router/routes';
 import { useAuthStore } from '@/store/authStore';
@@ -29,21 +30,26 @@ interface MenuItem {
 export default function MyPage() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
+  const clearLogin = useAuthStore((state) => state.logout);
+  const { mutate: logout } = useLogout();
   const { data: profile, isError, refetch } = useMyProfile();
 
-  const nickname = user?.nickname ?? '';
+  const nickname = user?.name ?? '';
 
   const handleLogout = () => {
-    logout();
-    void navigate(ROUTES.LOGIN, { replace: true });
+    logout(undefined, {
+      onSettled: () => {
+        clearLogin();
+        void navigate(ROUTES.LOGIN, { replace: true });
+      },
+    });
   };
 
   const menuItems: MenuItem[] = [
     { icon: bookIcon, label: '내 게시글', value: profile ? String(profile.postCount) : undefined },
     { icon: heartIcon, label: '관심 목록', value: profile ? String(profile.wishCount) : undefined },
     { icon: swapIcon, label: '거래 내역' },
-    { icon: mailIcon, label: '내 계정 정보', value: user?.email, valueSize: 'sm' },
+    { icon: mailIcon, label: '내 계정 정보', value: user?.id, valueSize: 'sm' },
     { icon: flagIcon, label: '신고 · 제재 내역' },
   ];
 
@@ -63,11 +69,13 @@ export default function MyPage() {
           <div className="my-page__user-info">
             <p className="my-page__nickname">{nickname}</p>
             <div className="my-page__meta">
-              {user?.department && <span>{user.department} ·</span>}
-              <span className="my-page__verified">
-                <img src={shieldIcon} alt="" width={12} height={12} />
-                학교인증
-              </span>
+              {user?.schoolName && <span>{user.schoolName} ·</span>}
+              {user?.schoolVerified && (
+                <span className="my-page__verified">
+                  <img src={shieldIcon} alt="" width={12} height={12} />
+                  학교인증
+                </span>
+              )}
             </div>
           </div>
           <img className="my-page__mascot" src={mascotImage} alt="" />

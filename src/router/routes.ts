@@ -3,7 +3,6 @@ export const ROUTES = {
   WELCOME: '/welcome',
   LOGIN: '/login',
   SIGNUP: '/signup',
-  SIGNUP_VERIFY: '/signup/verify',
   SIGNUP_COMPLETE: '/signup/complete',
   TRADE: '/trade',
   TRADE_DETAIL: '/trade/:tradeId',

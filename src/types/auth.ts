@@ -1,23 +1,31 @@
 export interface AuthUser {
   id: string;
-  email: string;
-  nickname: string;
-  department: string | null;
+  name: string;
+  profileImage: string | null;
+  introduction: string | null;
+  trustGrade: string;
+  schoolVerified: boolean;
+  schoolName: string | null;
+  trustScore: number;
+  admin: boolean;
+  status: string;
 }
 
 export interface LoginRequest {
-  email: string;
+  userId: string;
   password: string;
 }
 
 export interface SignupRequest {
-  email: string;
+  schoolId: string;
+  studentNo: string;
+  studentName: string;
+  userId: string;
   password: string;
   nickname: string;
-  department: string | null;
 }
 
-export interface VerificationMail {
-  email: string;
-  expiresAt: string;
+export interface School {
+  id: string;
+  name: string;
 }
