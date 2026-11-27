@@ -67,7 +67,7 @@ export default function MyPage() {
             {nickname.charAt(0)}
           </span>
           <div className="my-page__user-info">
-            <p className="my-page__nickname">{nickname}</p>
+            <p className="my-page__nickname">{user?.id}</p>
             <div className="my-page__meta">
               {user?.schoolName && <span>{user.schoolName} ·</span>}
               {user?.schoolVerified && (
