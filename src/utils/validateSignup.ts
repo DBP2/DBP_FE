@@ -1,5 +1,8 @@
+import { CUSTOM_SCHOOL_OPTION } from '@/constants/school';
+
 export interface SignupForm {
   schoolName: string;
+  customSchoolName: string;
   studentNo: string;
   studentName: string;
   userId: string;
@@ -18,6 +21,9 @@ export function validateSignup(form: SignupForm): SignupErrors {
   const nickname = form.nickname.trim();
 
   if (!form.schoolName) errors.schoolName = '학교를 선택해 주세요';
+  else if (form.schoolName === CUSTOM_SCHOOL_OPTION && !form.customSchoolName.trim()) {
+    errors.customSchoolName = '학교 이름을 입력해 주세요';
+  }
   if (!form.studentNo.trim()) errors.studentNo = '학번을 입력해 주세요';
   if (!form.studentName.trim()) errors.studentName = '이름을 입력해 주세요';
 

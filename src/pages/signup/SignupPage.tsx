@@ -8,6 +8,7 @@ import Checkbox from '@/components/common/Checkbox/Checkbox';
 import PageHeader from '@/components/common/PageHeader/PageHeader';
 import SelectField from '@/components/common/SelectField/SelectField';
 import TextField from '@/components/common/TextField/TextField';
+import { CUSTOM_SCHOOL_OPTION, normalizeSchoolName, SCHOOL_OPTIONS } from '@/constants/school';
 import { useSchools, useSignup } from '@/hooks/useAuth';
 import { ROUTES } from '@/router/routes';
 import { validateSignup, type SignupForm } from '@/utils/validateSignup';
@@ -16,6 +17,7 @@ import './SignupPage.css';
 
 const EMPTY_FORM: SignupForm = {
   schoolName: '',
+  customSchoolName: '',
   studentNo: '',
   studentName: '',
   userId: '',
@@ -24,6 +26,8 @@ const EMPTY_FORM: SignupForm = {
   nickname: '',
   agreed: false,
 };
+
+const SCHOOL_NOT_FOUND_MESSAGE = '아직 가입할 수 없는 학교예요';
 
 const serverErrorField = (message: string): keyof SignupForm =>
   message.includes('아이디') ? 'userId' : message.includes('닉네임') ? 'nickname' : 'studentNo';
@@ -34,6 +38,9 @@ export default function SignupPage() {
   const { mutate, isPending, error, reset } = useSignup();
   const [form, setForm] = useState<SignupForm>(EMPTY_FORM);
   const [touched, setTouched] = useState<Partial<Record<keyof SignupForm, boolean>>>({});
+  const [schoolNotFound, setSchoolNotFound] = useState(false);
+
+  const isCustomSchool = form.schoolName === CUSTOM_SCHOOL_OPTION;
 
   const errors = validateSignup(form);
   const isValid = Object.keys(errors).length === 0;
@@ -48,6 +55,7 @@ export default function SignupPage() {
 
   const update = <K extends keyof SignupForm>(field: K, value: SignupForm[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    setSchoolNotFound(false);
     reset();
   };
   const touch = (field: keyof SignupForm) => () =>
@@ -55,8 +63,16 @@ export default function SignupPage() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const school = schools.find((item) => item.name === form.schoolName);
-    if (!isValid || isPending || !school) return;
+    if (!isValid || isPending) return;
+
+    const schoolName = normalizeSchoolName(
+      isCustomSchool ? form.customSchoolName : form.schoolName,
+    );
+    const school = schools.find((item) => normalizeSchoolName(item.name) === schoolName);
+    if (!school) {
+      setSchoolNotFound(true);
+      return;
+    }
 
     mutate(
       {
@@ -88,12 +104,33 @@ export default function SignupPage() {
               label="학교"
               required
               placeholder="학교를 선택해 주세요"
-              options={schools.map((school) => school.name)}
+              options={[...SCHOOL_OPTIONS, CUSTOM_SCHOOL_OPTION]}
               value={form.schoolName}
               onChange={(event) => update('schoolName', event.target.value)}
               onBlur={touch('schoolName')}
-              error={schoolsFailed ? '학교 목록을 불러오지 못했어요' : visibleError('schoolName')}
+              error={
+                schoolsFailed
+                  ? '학교 목록을 불러오지 못했어요'
+                  : (visibleError('schoolName') ??
+                    (schoolNotFound && !isCustomSchool ? SCHOOL_NOT_FOUND_MESSAGE : undefined))
+              }
             />
+            {isCustomSchool && (
+              <TextField
+                label="학교 이름"
+                required
+                placeholder="예) 이화여자대학교"
+                value={form.customSchoolName}
+                onChange={(event) => update('customSchoolName', event.target.value)}
+                onBlur={touch('customSchoolName')}
+                error={
+                  visibleError('customSchoolName') ??
+                  (schoolNotFound ? SCHOOL_NOT_FOUND_MESSAGE : undefined)
+                }
+                autoComplete="organization"
+                autoFocus
+              />
+            )}
             <div className="signup-page__row">
               <TextField
                 label="학번"
